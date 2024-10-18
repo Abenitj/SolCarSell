@@ -151,7 +151,7 @@ const Home = () => {
           />
         ))}
       </div>
-
+      
       {/* CONTACT US SECTION */}
       <div className="p-10 bg-primary dark:bg-gray-900">
         <h2 className="sm:text-5xl font-[700] text-4xl text-red-400 dark:text-red-300 text-center">
