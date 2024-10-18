@@ -30,9 +30,9 @@ const Header = () => {
         <div className={`md:flex ${isOpen ? "block" : "hidden"} w-full md:w-auto md:order-1`}>
           <ul className="flex flex-col md:flex-row font-medium p-4 md:p-0 mt-4  rounded-lg md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:border-gray-700">
             <li>
-              <Link 
-                to="/" 
-                className={`group block py-2 px-3 md:p-0 rounded  md:hover:bg-transparent hover:bg-red-500 dark:hover:bg-gray-700`}
+              <Link
+                to="/"
+                className={`group block py-2 px-3 md:p-0 rounded  md:hover:bg-transparent hover:bg-red-500`}
                 aria-current="page"
               >
                 Home
@@ -40,26 +40,17 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link 
-                to="/CarListings" 
-                className={`group block py-2 px-3 md:p-0 rounded hover:bg-red-500 md:hover:bg-transparent dark:hover:bg-gray-700`}
-              >
-                
-                <div className='h-1 rounded-lg bg-white w-0 group-hover:w-full transition-all duration-200'></div>
-              </Link>
-            </li>
-            <li>
-              <Link 
-                to="/ContactUs" 
+              <Link
+                to="/carlistings"
                 className={`group block py-2 px-3 md:p-0 rounded hover:bg-red-500 md:hover:bg-transparent`}
               >
-                Contact
+                CarListings
                 <div className='h-1 rounded-lg bg-white w-0 group-hover:w-full transition-all duration-200'></div>
               </Link>
             </li>
             <li>
-              <Link 
-                to="/AboutUs" 
+              <Link
+                to="/about"
                 className={`group block py-2 px-3 md:p-0 rounded hover:bg-red-500  md:hover:bg-transparent`}
               >
                 About Us
@@ -67,14 +58,15 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link 
-                to="/contact-us" 
+              <Link
+                to="/contact"
                 className={`group block py-2 px-3 md:p-0 rounded hover:bg-red-500 md:hover:bg-transparent`}
               >
                 Contact
                 <div className='h-1 rounded-lg bg-white w-0 group-hover:w-full transition-all duration-200'></div>
               </Link>
             </li>
+
           </ul>
         </div>
         <div className="hidden md:flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">

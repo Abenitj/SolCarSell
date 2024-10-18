@@ -13,7 +13,7 @@ const ImageGallery = ({ carData }) => {
       if (window.innerWidth < 640) { // For sm and smaller screens
         setNumThumbnails(1);
       } else {
-        setNumThumbnails(2); // For md and larger screens
+        setNumThumbnails(4); // For md and larger screens
       }
     };
 
@@ -45,9 +45,9 @@ const ImageGallery = ({ carData }) => {
   };
 
   return (
-    <div>
+    <div >
       {/* Main Image Gallery */}
-      <div className="flex flex-col md:flex-row gap-6 w-full p-4 py-10">
+      <div className="flex flex-col md:flex-row gap-6 w-full p-4 py-10 ">
         {/* Left side: Image gallery */}
         <div className="w-full md:w-[80%]">
           {/* Featured image */}
@@ -61,31 +61,32 @@ const ImageGallery = ({ carData }) => {
           </div>
 
           {/* Thumbnails */}
-          <div className={`grid grid-cols-2 md:grid-cols-3 gap-2 mt-4`}>
-            {/* Displaying thumbnails based on screen size */}
-            {carData.images.slice(0, numThumbnails).map((image, index) => (
-              <div key={index}>
-                <img
-                  className="h-[80px] sm:h-[100px] w-full object-cover rounded-lg cursor-pointer hover:opacity-75 transition-opacity"
-                  src={image}
-                  alt={`Thumbnail ${index + 1}`}
-                  onClick={() => {
-                    setSelectedImage(image);
-                    setModalImageIndex(index); // Set the index for modal
-                  }}
-                />
-              </div>
-            ))}
-            {/* Show "more" indicator only if there are more images */}
-            {carData.images.length > numThumbnails && (
-              <div
-                className="h-[80px] sm:h-[100px] w-full flex items-center justify-center rounded-lg bg-gray-200 cursor-pointer hover:opacity-75 transition-opacity"
-                onClick={() => handleOpenModal(numThumbnails)} // Open modal showing all images
-              >
-                <span className="text-gray-600">{`${carData.images.length - numThumbnails}+ more`}</span>
-              </div>
-            )}
-          </div>
+<div className={`flex overflow-x-auto gap-2 mt-4`}>
+  {/* Displaying thumbnails based on screen size */}
+  {carData.images.slice(0, numThumbnails).map((image, index) => (
+    <div key={index} className="flex-shrink-0">
+      <img
+        className="h-[80px] sm:h-[100px] w-auto object-cover rounded-lg cursor-pointer hover:opacity-75 transition-opacity"
+        src={image}
+        alt={`Thumbnail ${index + 1}`}
+        onClick={() => {
+          setSelectedImage(image);
+          setModalImageIndex(index); // Set the index for modal
+        }}
+      />
+    </div>
+  ))}
+  {/* Show "more" indicator only if there are more images */}
+  {carData.images.length > numThumbnails && (
+    <div
+      className="h-[80px] sm:h-[100px] w-auto flex items-center justify-center rounded-lg bg-gray-200 cursor-pointer hover:opacity-75 transition-opacity"
+      onClick={() => handleOpenModal(numThumbnails)} // Open modal showing all images
+    >
+      <span className="text-gray-600 w-36 flex justify-center items-center">{`${carData.images.length - numThumbnails}+ more`}</span>
+    </div>
+  )}
+</div>
+
         </div>
 
         {/* Right side: Car Details */}
@@ -139,7 +140,7 @@ const ImageGallery = ({ carData }) => {
             </button>
 
             {/* Modal Image Carousel */}
-            <div className="w-[90vw] md:w-[80vw] lg:w-[60vw] flex flex-col items-center justify-center relative">
+            <div className="w-[90vw] md:w-[70vw] lg:w-[70vw] flex flex-col items-center justify-center relative">
               <img
                 className="w-full h-auto max-h-[500px] object-cover rounded-lg"
                 src={carData.images[modalImageIndex]}
