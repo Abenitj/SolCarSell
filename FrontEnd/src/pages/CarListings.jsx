@@ -43,7 +43,7 @@ const CarListing = () => {
   }, []); // Empty dependency array to run only on mount
 
   return (
-    <div className="p-4">
+    <div className="p-4 md:mt-16">
       <FilterSortCar onFilterSort={handleFilterSort} />
       {filterData.map((car, index) => (
         <div key={index}>
