@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .cars-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between cars */
+            justify-content: center; /* Center align */
+        }
+
+        .car-item {
+            flex: 1 1 calc(20% - 20px); /* 5 cars per row */
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+            position: relative; /* For positioning buttons */
+        }
+
+        .car-item:hover {
+            transform: scale(1.02); /* Slightly enlarge on hover */
+        }
+
+        .car-images {
+            position: relative; /* For button positioning */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the images */
+            padding: 10px;
+        }
+
+        .car-images img {
+            width: 100%;
+            max-width: 300px; /* Limit maximum width */
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .car-images img:hover {
+            transform: scale(1.05); /* Zoom effect on hover */
+        }
+
+        /* Style for buttons */
+        .image-buttons {
+            position: absolute;
+            bottom: 10px; /* Positioning from the bottom */
+            left: 50%;
+            transform: translateX(-50%); /* Center buttons horizontally */
+            display: flex;
+            gap: 5px; /* Space between buttons */
+        }
+
+        .image-buttons button {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .update-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .car-details {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .car-details h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        .car-details p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .car-details .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .car-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .car-buttons button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .car-buttons .update-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .car-buttons .delete-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .car-item {
+                flex: 1 1 calc(50% - 20px); /* 2 cars per row on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .car-item {
+                flex: 1 1 100%; /* 1 car per row on very small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cars Information</h1>
+        <div id="carsContainer" class="cars-container"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const fetchCars = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/cars');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+
+                    const cars = await response.json();
+                    const carsContainer = document.getElementById('carsContainer');
+                    carsContainer.innerHTML = '';
+
+                    cars.forEach(car => {
+                        const carItem = document.createElement('div');
+                        carItem.className = 'car-item';
+
+                        const carImages = document.createElement('div');
+                        carImages.className = 'car-images';
+
+                        // Create a container for each image with buttons
+                        car.images.forEach(imageUrl => {
+                            const img = document.createElement('img');
+                            img.src = '../' + imageUrl;
+
+                            // Create buttons for each image
+                            const imageButtons = document.createElement('div');
+                            imageButtons.className = 'image-buttons';
+
+                            const updateImageButton = document.createElement('button');
+                            updateImageButton.className = 'update-button';
+                            updateImageButton.innerText = 'Update';
+                            updateImageButton.addEventListener('click', () => {
+                                // Redirect to the image update page with the car and image information
+                                window.location.href = `C:/Users/NEW/Desktop/server(wonde)/views/imageUpdate.html?carId=${car._id}&imageUrl=${encodeURIComponent(imageUrl)}`;
+                            });
+
+                            const deleteImageButton = document.createElement('button');
+                            deleteImageButton.className = 'delete-button';
+                            deleteImageButton.innerText = 'Delete';
+                            deleteImageButton.addEventListener('click', async () => {
+                                try {
+                                    const response = await fetch(`http://localhost:3000/cars/${car._id}/images/${encodeURIComponent(imageUrl)}`, {
+                                        method: 'DELETE'
+                                    });
+                                    if (response.ok) {
+                                        fetchCars();
+                                    } else {
+                                        console.error('Failed to delete image');
+                                    }
+                                } catch (error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+
+                            // Append buttons to the imageButtons div
+                            imageButtons.appendChild(updateImageButton);
+                            imageButtons.appendChild(deleteImageButton);
+                            carImages.appendChild(img);
+                            carImages.appendChild(imageButtons);
+                        });
+
+                        const carDetails = document.createElement('div');
+                        carDetails.className = 'car-details';
+
+                        const carTitle = document.createElement('h2');
+                        carTitle.innerText = `${car.brand} ${car.model}`;
+                        carDetails.appendChild(carTitle);
+
+                        const carColor = document.createElement('p');
+                        carColor.innerText = `Color: ${car.color}`;
+                        carDetails.appendChild(carColor);
+
+                        const carGear = document.createElement('p');
+                        carGear.innerText = `Gear: ${car.gear}`;
+                        carDetails.appendChild(carGear);
+
+                        const carFuelType = document.createElement('p');
+                        carFuelType.innerText = `Fuel Type: ${car.fuel_type}`;
+                        carDetails.appendChild(carFuelType);
+
+                        const carPrice = document.createElement('p');
+                        carPrice.className = 'price';
+                        carPrice.innerText = `Price: $${car.price}`;
+                        carDetails.appendChild(carPrice);
+
+                        if (car.description) {
+                            const carDescription = document.createElement('p');
+                            carDescription.innerText = `Description: ${car.description}`;
+                            carDetails.appendChild(carDescription);
+                        }
+
+                        const carButtons = document.createElement('div');
+                        carButtons.className = 'car-buttons';
+
+                        const updateButton = document.createElement('button');
+                        updateButton.className = 'update-button';
+                        updateButton.innerText = 'Update';
+                        updateButton.addEventListener('click', () => {
+                            window.location.href = `C:/Users/NEW/Desktop/server(wonde)/views/updateCar.html?id=${car._id}`;
+                        });
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.className = 'delete-button';
+                        deleteButton.innerText = 'Delete';
+                        deleteButton.addEventListener('click', async () => {
+                            try {
+                                const response = await fetch(`http://localhost:3000/cars/${car._id}`, {
+                                    method: 'DELETE'
+                                });
+                                if (response.ok) {
+                                    fetchCars();
+                                } else {
+                                    console.error('Failed to delete car');
+                                }
+                            } catch (error) {
+                                console.error('Error:', error);
+                            }
+                        });
+
+                        carButtons.appendChild(updateButton);
+                        carButtons.appendChild(deleteButton);
+                        carDetails.appendChild(carButtons);
+                        carItem.appendChild(carImages);
+                        carItem.appendChild(carDetails);
+                        carsContainer.appendChild(carItem);
+                    });
+                } catch (error) {
+                    console.error('Error fetching cars:', error);
+                }
+            };
+
+            fetchCars();
+        });
+    </script>
+</body>
+</html>

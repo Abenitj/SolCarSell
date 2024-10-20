@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Car Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .image-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .cancel-button {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Car Image</h1>
+        <div class="image-preview">
+            <img id="currentImage" src="" alt="Current Image">
+            <span id="noImage" style="display: none;">No image available</span>
+        </div>
+        <form id="updateImageForm" enctype="multipart/form-data">
+            <label for="newImage">Select new image:</label>
+            <input type="file" id="newImage" name="image" accept="image/*" required>
+            <button type="submit">Update Image</button>
+        </form>
+        <button class="cancel-button" onclick="window.location.href = 'index.html';">Cancel</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const carId = urlParams.get('carId');
+            const imageUrl = decodeURIComponent(urlParams.get('imageUrl'));
+
+            const currentImage = document.getElementById('currentImage');
+            const noImage = document.getElementById('noImage');
+            if (imageUrl) {
+                currentImage.src = '../' + imageUrl;
+                currentImage.style.display = 'block';
+                noImage.style.display = 'none';
+            } else {
+                currentImage.style.display = 'none';
+                noImage.style.display = 'block';
+            }
+
+            const newImageInput = document.getElementById('newImage');
+            newImageInput.addEventListener('change', function () {
+                const file = newImageInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        currentImage.src = e.target.result;
+                        currentImage.style.display = 'block';
+                        noImage.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            const updateImageForm = document.getElementById('updateImageForm');
+            updateImageForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const formData = new FormData(updateImageForm);
+                formData.append('oldImageUrl', imageUrl);
+
+                try {
+                    const response = await fetch(`http://localhost:3000/cars/${carId}/images`, {
+                        method: 'PUT',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        window.location.href = 'C:/Users/NEW/Desktop/server(wonde)/views/displayCars.html';
+                    } else {
+                        console.error('Failed to update image');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
