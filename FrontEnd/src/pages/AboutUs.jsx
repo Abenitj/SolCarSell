@@ -3,33 +3,18 @@ import carImage from "../assets/image/carimg1.jpg"
 import MapComponent from '../components/MapComponent';
 const AboutUs = () => {
   return (
-    <div className="max-w-7xl mx-auto p-6 pt-10">
-      {/* <section className="flex flex-col md:flex-row mb-8">
-        <div className="md:w-1/2">
-          <img src={carImage} alt="Car" className="rounded-lg shadow-lg w-full h-auto" />
-        </div>
-        <div className="md:w-1/2 md:pl-6 flex flex-col justify-center">
-          <h2 className="text-2xl font-semibold mb-4">Overview</h2>
-          <p className="text-lg text-gray-700 mb-4">
-            Welcome to <strong>Sol Car Trade</strong>, where our passion for automobiles meets a commitment to excellence. Founded on the principles of integrity, transparency, and customer satisfaction, we strive to revolutionize the car trading experience. Our mission is to connect buyers and sellers through a seamless platform that ensures trust and quality in every transaction.
-          </p>
-          <p className="text-lg text-gray-700">
-            At Sol Car Trade, we believe that every car has a story to tell, and we are dedicated to helping you find the perfect vehicle that aligns with your lifestyle and needs. Our core values—innovation, reliability, and service—drive us to provide exceptional solutions in the automotive marketplace.
-          </p>
-        </div>
-      </section> */}
-
-      <section className='md:flex-row mb-8'>
+    <div className=" pt-10  mt-7">
+      <section className='md:flex-row  bg-red-50'>
         <div class="sm:flex items-center max-w-screen-xl">
           <div class="sm:w-1/2 p-10">
             <div class="image object-center text-center">
               <img src="https://i.imgur.com/WbQnbas.png" />
             </div>
           </div>
-          <div class="sm:w-1/2 p-5">
+          <div class="sm:w-1/2 p-5 text-center sm:text-left">
             <div class="text">
-              <span class="text-gray-500 border-b-2 border-red-500 uppercase">About us</span>
-              <h2 class="my-4 font-bold text-3xl  sm:text-4xl ">About <span class="text-red-500">Our Company</span>
+              <span class="text-gray-500 border-b-2 text-5xl border-red-500 uppercase">About us</span>
+              <h2 class="my-4 font-bold text-xl  sm:text-4xl ">About <span class="text-red-500">Our Company</span>
               </h2>
               <p class="text-gray-700">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, commodi
@@ -40,16 +25,8 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-
-      {/* <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
-        <p className="text-lg text-gray-700">
-          To empower individuals and businesses in the car trading process, delivering unmatched value and service while fostering a community built on trust and respect.
-        </p>
-      </section> */}
-
       <section class="text-gray-700 body-font mt-10">
-        <div class="flex justify-center text-3xl font-bold text-gray-800 text-center">
+        <div class="flex justify-center text-4xl font-bold text-gray-800 text-center">
           Why Us?
         </div>
         <div class="container px-5 py-12 mx-auto">
@@ -96,8 +73,8 @@ const AboutUs = () => {
 
       <section class="bg-gray-100">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:py-20 lg:px-8">
-          <div class="max-w-2xl lg:max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-extrabold text-gray-900" id="contactUs">Visit Our Location</h2>
+          <div class="max-w-2xl lg:max-w-4xl mx-auto text-center ">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900" id="contactUs"><span className='text-red-500'>Visit Our </span>Location</h2>
             <p class="mt-3 text-lg text-gray-500">Let us serve you the best</p>
           </div>
           <div class="mt-8 lg:mt-20">
@@ -111,7 +88,7 @@ const AboutUs = () => {
                     <a class="flex m-1" href="tel:+919823331842">
                       <div class="flex-shrink-0">
                         <div
-                          class="flex items-center justify-between h-10 w-30 rounded-md bg-indigo-500 text-white p-2">
+                          class="flex items-center justify-between h-10 w-30 rounded-md bg-red-500 text-white px-3">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -144,18 +121,8 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Our Values</h2>
-        <ul className="list-disc list-inside text-lg text-gray-700">
-          <li><strong>Integrity:</strong> We uphold the highest standards of honesty and ethical conduct in all our dealings.</li>
-          <li><strong>Customer-Centricity:</strong> Our customers are at the heart of everything we do. We listen, understand, and cater to their unique needs.</li>
-          <li><strong>Innovation:</strong> We embrace new technologies and ideas to continuously improve our services and enhance user experience.</li>
-          <li><strong>Quality:</strong> We are committed to providing high-quality vehicles and reliable services that meet the highest standards.</li>
-        </ul>
-      </section> */}
-
-      <div className="mt-8 text-center">
-        <p className="text-lg text-gray-700">
+      <div className="flex justify-center  sm:mt-8 mt-3  text-center w-full">
+        <p className="text-xl  text-gray-700 p-5">
           Join us on this journey, and experience a car trading platform where your needs are prioritized, and every detail matters.
         </p>
       </div>

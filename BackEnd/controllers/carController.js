@@ -36,7 +36,7 @@ const createCar = async (req, res) => {
 const getAllCars = async (req, res) => {
     try {
         const cars = await Car.find();
-        res.send(cars);
+        res.status(200).send(cars);
     } catch (error) {
         res.status(500).send(error);
     }

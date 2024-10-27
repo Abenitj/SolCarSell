@@ -152,12 +152,12 @@ const Home = () => {
             allow users to view, search, and inquire about cars. It will also
             provide an admin panel for managing car listings.
           </p>
-          <a
-            href="/AboutUs"
+          <Link
+            to="/about"
             className="inline-block px-5 py-2 hover:bg-red-500 bg-red-400 text-white rounded-md mt-4"
           >
-            Read More
-          </a>
+           Read More
+          </Link>
         </div>
         <div className="md:w-1/2 md:p-5">
           <img

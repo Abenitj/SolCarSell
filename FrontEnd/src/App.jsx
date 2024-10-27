@@ -6,10 +6,12 @@ import Home from './pages/home';
 import CarListing from './pages/CarListings';
 import ContactUs from './components/ContactUs';
 import Header from './components/header';
+import ScrollToTop from './components/ScrollToTop';
 
 const App = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home/>} />

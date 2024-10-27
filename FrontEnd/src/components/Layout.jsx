@@ -3,6 +3,7 @@ import HomeHeader from './homeHeader';
 import Footer from '../pages/footer';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from './header';
+import ScrollToTopButton from './ScrollToTopButton';
 const Layout = () => {
   const [isHome, setisHome] = useState(null)
   const location=useLocation();
@@ -21,6 +22,7 @@ const Layout = () => {
           </header>
           <main>
             <Outlet/>
+            <ScrollToTopButton />
           </main>
           <footer>
        <Footer/>

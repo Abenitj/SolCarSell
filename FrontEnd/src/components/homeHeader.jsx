@@ -1,27 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FaMoon, FaSun } from "react-icons/fa"; // Importing icons for dark mode
 import logo from "../assets/image/logo.jpg";
 
 const HomeHeader = () => {
-  const [bgColor, setBgColor] = useState("");
-  const [btn, setBtn] = useState("");
+  const [bgColor, setBgColor] = useState("backdrop-blur-lg"); // Initial background for blur effect
   const [isOpen, setIsOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setBgColor("bg-red-600 bg-opacity-90 backdrop-blur-md");
-        setBtn("bg-red-600 border ");
+      if (window.scrollY > 550) {
+        setBgColor(isDarkMode ? "bg-gray-900" : "bg-red-600 bg-opacity-90 backdrop-blur-md");
       } else {
-        setBgColor("backdrop-blur-lg");
-        setBtn("");
+        setBgColor("backdrop-blur-lg"); // Reset background on top
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    const savedMode = localStorage.getItem("dark-mode") === "true";
+    setIsDarkMode(savedMode);
+    document.documentElement.classList.toggle("dark", savedMode);
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", handleScroll); // Add scroll listener
+    return () => window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      localStorage.setItem("dark-mode", newMode);
+      document.documentElement.classList.toggle("dark", newMode);
+      return newMode;
+    });
+  };
 
   return (
     <nav
@@ -41,7 +52,7 @@ const HomeHeader = () => {
         </Link>
 
         {/* Mobile Menu Toggle */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center space-x-3">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-white focus:outline-none"
@@ -60,6 +71,14 @@ const HomeHeader = () => {
                 d="M4 6h16M4 12h16m-7 6h7"
               />
             </svg>
+          </button>
+
+          {/* Dark Mode Toggle Icon */}
+          <button
+            onClick={toggleDarkMode}
+            className="text-white focus:outline-none"
+          >
+            {isDarkMode ? <FaSun className="h-6 w-6" /> : <FaMoon className="h-6 w-6" />}
           </button>
         </div>
 
@@ -107,16 +126,14 @@ const HomeHeader = () => {
           </ul>
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <Link to="/carListings">
-            <button
-              type="button"
-              className={`text-white bg-red-500 ${btn} transition-all duration-100 font-medium rounded-lg text-sm px-4 py-2 text-center`}
-            >
-              Get Started
-            </button>
-          </Link>
+        {/* Dark Mode Toggle for Desktop */}
+        <div className="hidden md:flex md:order-2 space-x-3 rtl:space-x-reverse">
+          <button
+            onClick={toggleDarkMode}
+            className="text-white focus:outline-none"
+          >
+            {isDarkMode ? <FaSun className="h-6 w-6" /> : <FaMoon className="h-6 w-6" />}
+          </button>
         </div>
       </div>
     </nav>
