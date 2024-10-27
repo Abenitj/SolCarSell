@@ -7,6 +7,7 @@ import img3 from "../assets/image/herocar3.jpg";
 import aboutimg from "../assets/image/carimg1.jpg";
 import ContactUs from "../components/ContactUs";
 import Accordion from "./Accordion";
+import Testimonial from "../components/Testimonial";
 import faqs from "../assets/faqs";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
@@ -168,6 +169,8 @@ const Home = () => {
         </div>
       </section>
 
+      <Testimonial></Testimonial>
+
       {/* FAQ SECTION */}
       <div className="min-h-screen bg-red-50 flex flex-col gap-5 md:p-16 p-2">
         <div className="md:text-5xl text-3xl font-bold text-neutral">
@@ -188,18 +191,11 @@ const Home = () => {
       </div>
 
       {/* CONTACT US SECTION */}
-      <div className="p-10 bg-primary">
-        <h2 className="sm:text-5xl font-[700] text-4xl text-red-400 text-center">
-          Contact Us
-        </h2>
-        <div className="flex justify-center">
-          <p className="sm:text-3xl text-xl md:w-1/2 text-neutral text-center font-bold">
-            Have a question or need assistance? Reach out to us!
-          </p>
-        </div>
+      <div>
         <ContactUs />
       </div>
     </div>
+
   );
 };
 
