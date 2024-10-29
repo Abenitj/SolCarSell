@@ -57,20 +57,6 @@ const Home = () => {
       price: "$22,000",
       image: img2,
     },
-    {
-      id: 3,
-      make: "Ford",
-      model: "Mustang",
-      price: "$30,000",
-      image: img3,
-    },
-    {
-      id: 3,
-      make: "Ford",
-      model: "Mustang",
-      price: "$30,000",
-      image: img3,
-    },
   ];
 
   return (
@@ -79,7 +65,7 @@ const Home = () => {
       <HeroSection />
 
       {/* FEATURED CARS SECTION */}
-      <div className="bg-red-50">
+      <div className="bg-slate-50 dark:bg-gray-900">
         <section className="w-full py-12">
           <h1
             id="feature_car"
@@ -88,28 +74,28 @@ const Home = () => {
             Featured Cars
           </h1>
           <div className="flex justify-center py-5">
-            <h2 className="text-3xl md:w-[50%] w-full text-center font-semibold mb-8">
+            <h2 className="text-3xl md:w-[50%] dark:text-primary w-full text-center font-semibold mb-8 ">
               Discover Our Exclusive Selection of Premium Featured Cars
             </h2>
           </div>
 
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {cars.map((car) => (
                 <Link
                   to="/carlistings" // Navigate to /carlistings on card click
                   key={car.id}
-                  className="relative group bg-red-100 shadow-sm overflow-hidden"
+                  className="relative group shadow-sm overflow-hidden"
                 >
                   <img
                     src={car.image}
                     alt={`${car.make} ${car.model}`}
-                    className="w-full h-48 object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-105 grayscale group-hover:grayscale-0"
+                    className="w-full h-48 object-cover transition-transform duration-500 ease-in-out transform group-hover:scale-105  "
                     loading="lazy" // Lazy loading for images
                     onLoad={() => setLoading(false)}
                   />
                   {/* Grayish overlay on hover */}
-                  <div className="absolute inset-0 bg-gray-400 opacity-30 transition-opacity duration-500 group-hover:opacity-0"></div>
+                  <div className="absolute inset-0 dark:bg-gray-900  opacity-30 transition-opacity duration-500 group-hover:opacity-0"></div>
 
                   {/* Text comes up on hover without background */}
                   <div className="absolute inset-0 flex justify-center items-end p-4 transition-transform duration-500 transform translate-y-10 group-hover:translate-y-0">
@@ -138,7 +124,7 @@ const Home = () => {
       </div>
 
       {/* ABOUT US SECTION */}
-      <section className="md:min-h-[90vh] h-full sm:w-full md:text-left text-center w-full py-5 text-neutral flex flex-col md:flex-row md:justify-center md:items-center">
+      <section className="md:min-h-[90vh] dark:bg-gray-800 dark:text-primary h-full sm:w-full md:text-left text-center w-full py-5 flex flex-col md:flex-row md:justify-center md:items-center">
         <div className="md:w-[40%] p-5">
           <h1 className="md:text-6xl text-4xl font-bold text-red-400">
             About Us
@@ -163,20 +149,22 @@ const Home = () => {
           <img
             src={aboutimg}
             alt="About Us"
-            className="w-full h-auto rounded-lg shadow-lg"
+            className="w-full h-auto rounded-lg shadow-sm"
             loading="lazy"
           />
         </div>
       </section>
 
-      <Testimonial></Testimonial>
+   <section>
+   <Testimonial/>
+   </section>
 
       {/* FAQ SECTION */}
-      <div className="min-h-screen bg-red-50 flex flex-col gap-5 md:p-16 p-2">
-        <div className="md:text-5xl text-3xl font-bold text-neutral">
+      <div className="min-h-screen bg-slate-50 dark:bg-gray-800 dark:text-primary  flex flex-col gap-5 md:p-16 p-2">
+        <div className="md:text-5xl text-3xl font-bold ">
           FAQs
         </div>
-        <div className="text-neutral">
+        <div className="">
           Find answers to common questions potential clients might have about
           working with Addis Spark.
         </div>

@@ -2,9 +2,27 @@ import React from 'react';// Make sure to update the path to your image
 import carImage from "../assets/image/carimg1.jpg"
 import MapComponent from '../components/MapComponent';
 const AboutUs = () => {
+  const items = [
+    {
+      img: "https://image3.jdomni.in/banner/13062021/58/97/7C/E53960D1295621EFCB5B13F335_1623567851299.png?output-format=webp",
+      title: "Latest Milling Machinery",
+    },
+    {
+      img: "https://image2.jdomni.in/banner/13062021/3E/57/E8/1D6E23DD7E12571705CAC761E7_1623567977295.png?output-format=webp",
+      title: "Reasonable Rates",
+    },
+    {
+      img: "https://image3.jdomni.in/banner/13062021/16/7E/7E/5A9920439E52EF309F27B43EEB_1623568010437.png?output-format=webp",
+      title: "Time Efficiency",
+    },
+    {
+      img: "https://image3.jdomni.in/banner/13062021/EB/99/EE/8B46027500E987A5142ECC1CE1_1623567959360.png?output-format=webp",
+      title: "Expertise in Industry",
+    },
+  ];
   return (
     <div className=" pt-10  mt-7">
-      <section className='md:flex-row  bg-red-50'>
+      <section className='md:flex-row  bg-slate-100 dark:bg-gray-900  dark:text-primary'>
         <div class="sm:flex items-center max-w-screen-xl">
           <div class="sm:w-1/2 p-10">
             <div class="image object-center text-center">
@@ -13,10 +31,10 @@ const AboutUs = () => {
           </div>
           <div class="sm:w-1/2 p-5 text-center sm:text-left">
             <div class="text">
-              <span class="text-gray-500 border-b-2 text-5xl border-red-500 uppercase">About us</span>
+              <span class="border-b-2 text-5xl border-red-500 uppercase">About us</span>
               <h2 class="my-4 font-bold text-xl  sm:text-4xl ">About <span class="text-red-500">Our Company</span>
               </h2>
-              <p class="text-gray-700">
+              <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, commodi
                 doloremque, fugiat illum magni minus nisi nulla numquam obcaecati placeat quia, repellat tempore
                 voluptatum.
@@ -25,57 +43,32 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-      <section class="text-gray-700 body-font mt-10">
-        <div class="flex justify-center text-4xl font-bold text-gray-800 text-center">
-          Why Us?
+      <section className=" dark:bg-gray-800 h-[90vh] py-10 ">
+      <div className="flex justify-center text-4xl font-bold dark:text-primary text-center">
+        Why Us?
+      </div>
+      <div className="container px-5 py-12 mx-auto">
+        <div className="flex flex-wrap text-center justify-center">
+          {items.map((item, index) => (
+            <div key={index} className="p-4 md:w-1/4 sm:w-1/2">
+              <div className="px-4 dark:text-primary text-gray-800 py-6 transform transition duration-500 hover:scale-110">
+                <div className="flex justify-center">
+                  <img src={item.img} className="w-32 mb-3" alt={item.title} />
+                </div>
+                <h2 className="title-font font-regular text-2xl">
+                  {item.title}
+                </h2>
+              </div>
+            </div>
+          ))}
         </div>
-        <div class="container px-5 py-12 mx-auto">
-          <div class="flex flex-wrap text-center justify-center">
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-              <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                <div class="flex justify-center ">
-                  <img src="https://image3.jdomni.in/banner/13062021/58/97/7C/E53960D1295621EFCB5B13F335_1623567851299.png?output-format=webp" class="w-32 mb-3 " />
-                </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">Latest Milling Machinery</h2>
-              </div>
-            </div>
-
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-              <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                <div class="flex justify-center">
-                  <img src="https://image2.jdomni.in/banner/13062021/3E/57/E8/1D6E23DD7E12571705CAC761E7_1623567977295.png?output-format=webp" class="w-32 mb-3" />
-                </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">Reasonable Rates</h2>
-              </div>
-            </div>
-
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-              <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                <div class="flex justify-center">
-                  <img src="https://image3.jdomni.in/banner/13062021/16/7E/7E/5A9920439E52EF309F27B43EEB_1623568010437.png?output-format=webp" class="w-32 mb-3" />
-                </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">Time Efficiency</h2>
-              </div>
-            </div>
-
-            <div class="p-4 md:w-1/4 sm:w-1/2">
-              <div class="px-4 py-6 transform transition duration-500 hover:scale-110">
-                <div class="flex justify-center">
-                  <img src="https://image3.jdomni.in/banner/13062021/EB/99/EE/8B46027500E987A5142ECC1CE1_1623567959360.png?output-format=webp" class="w-32 mb-3" />
-                </div>
-                <h2 class="title-font font-regular text-2xl text-gray-900">Expertise in Industry</h2>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <section class="bg-gray-100">
+      </div>
+    </section>
+      <section class="bg-gray-100 dark:bg-gray-900">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:py-20 lg:px-8">
           <div class="max-w-2xl lg:max-w-4xl mx-auto text-center ">
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900" id="contactUs"><span className='text-red-500'>Visit Our </span>Location</h2>
-            <p class="mt-3 text-lg text-gray-500">Let us serve you the best</p>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-primary" id="contactUs"><span className='text-red-500'>Visit Our </span>Location</h2>
+            <p class="mt-3 text-lg text-primary dark:text-primary">Let us serve you the best</p>
           </div>
           <div class="mt-8 lg:mt-20">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -83,7 +76,7 @@ const AboutUs = () => {
                 <div class="max-w-full mx-auto rounded-lg overflow-hidden">
                   <div class="border-t border-gray-200 px-6 py-4">
                     <h3 class="text-lg font-bold text-gray-900">Contact</h3>
-                    <p class="mt-1 font-bold text-gray-600"><a href="tel:+123">Phone: +91
+                    <p class="mt-1 font-bold text-gray-600 dark:text-primary"><a href="tel:+123">Phone: +91
                       123456789</a></p>
                     <a class="flex m-1" href="tel:+919823331842">
                       <div class="flex-shrink-0">
@@ -101,12 +94,12 @@ const AboutUs = () => {
                     </a>
                   </div>
                   <div class="px-6 py-4">
-                    <h3 class="text-lg font-medium text-gray-900">Our Address</h3>
-                    <p class="mt-1 text-gray-600">Sale galli, 60 foot road, Latur</p>
+                    <h3 class="text-lg font-medium dark:text-gray-900">Our Address</h3>
+                    <p class="mt-1 text-gray-600 dark:text-primary">Sale galli, 60 foot road, Latur</p>
                   </div>
                   <div class="border-t border-gray-200 px-6 py-4">
-                    <h3 class="text-lg font-medium text-gray-900">Hours</h3>
-                    <p class="mt-1 text-gray-600">Monday - Sunday : 2pm - 9pm</p>
+                    <h3 class="text-lg font-medium text-gray-900d  dark:text-primary">Hours</h3>
+                    <p class="mt-1 text-gray-600 dark:text-primary">Monday - Sunday : 2pm - 9pm</p>
                   </div>
                 </div>
               </div>
@@ -121,8 +114,8 @@ const AboutUs = () => {
         </div>
       </section>
 
-      <div className="flex justify-center  sm:mt-8 mt-3  text-center w-full">
-        <p className="text-xl  text-gray-700 p-5">
+      <div className="flex justify-center  dark:text-primary text-center w-full dark:bg-gray-800">
+        <p className="text-xl  p-5">
           Join us on this journey, and experience a car trading platform where your needs are prioritized, and every detail matters.
         </p>
       </div>

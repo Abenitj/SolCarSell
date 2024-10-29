@@ -11,7 +11,7 @@ const HomeHeader = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 550) {
-        setBgColor(isDarkMode ? "bg-gray-900" : "bg-red-600 bg-opacity-90 backdrop-blur-md");
+        setBgColor("dark:bg-gray-800 bg-red-600 bg-opacity-90 backdrop-blur-md");
       } else {
         setBgColor("backdrop-blur-lg"); // Reset background on top
       }
@@ -36,7 +36,7 @@ const HomeHeader = () => {
 
   return (
     <nav
-      className={`z-50 fixed top-0 left-0 w-full transition-all duration-300 ${bgColor} border-gray-200 flex flex-col md:flex-row`}
+      className={`z-50   fixed top-0 left-0 w-full transition-all duration-300 ${bgColor} border-gray-200 flex flex-col md:flex-row`}
     >
       <div className="max-w-screen-xl flex flex-wrap w-full items-center justify-between mx-auto p-2">
         {/* Logo Section */}

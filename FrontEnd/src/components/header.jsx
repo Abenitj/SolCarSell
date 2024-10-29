@@ -24,7 +24,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="z-50 bg-red-600 dark:bg-gray-900 text-white shadow-sm flex-row fixed top-0 left-0 w-full border-gray-200 transition-all duration-300">
+    <nav className="z-50 bg-red-600 dark:bg-gray-800  shadow-xl text-white  flex-row fixed top-0 left-0 w-full border-gray-200 transition-all duration-300">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2 transition-colors duration-500">
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={logo} className="h-14 bg-primary rounded-full" alt="SolCarTrade" />

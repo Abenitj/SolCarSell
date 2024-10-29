@@ -91,8 +91,8 @@ const ImageGallery = ({ carData }) => {
 
         {/* Right side: Car Details */}
         <div className="w-full md:w-[50%] p-4 rounded-lg">
-          <h2 className="text-4xl text-red-500 font-bold mb-4">Car Details</h2>
-          <ul className="space-y-2 text-xl text-neutral">
+          <h2 className="text-3xl text-red-300 font-bold mb-4 border-b-[2px] pb-2 border-red-300 dark:border-gray-200">Car Details</h2>
+          <ul className="space-y-2 text-xl dark:text-primary">
             <li><strong>Brand:</strong> {carData.carDetails.brand}</li>
             <li><strong>Model:</strong> {carData.carDetails.model}</li>
             <li><strong>Price:</strong> {<FormattedPrice price={carData.carDetails.price}/>} birr</li>
@@ -100,7 +100,7 @@ const ImageGallery = ({ carData }) => {
             <li><strong>Gear:</strong> {carData.carDetails.gear}</li>
             <li><strong>Fuel Type:</strong> {carData.carDetails.fuel}</li>
           </ul>
-          <p className="mt-4 text-gray-600">
+          <p className="mt-4 text-neutral dark:text-primary">
             {carData.carDetails.description}
           </p>
         </div>

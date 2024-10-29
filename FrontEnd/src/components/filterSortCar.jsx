@@ -18,7 +18,7 @@ const FilterSortCar = ({ onFilterSort }) => {
 
   return (
     <div className="mb-4 ">
-      <h2 className="text-lg font-bold mb-2">Filter and Sort Cars</h2>
+      <h2 className="text-lg font-bold mb-2 dark:text-white">Filter and Sort Cars</h2>
       <div className="flex flex-col md:flex-row md:space-x-4 mb-4 border-[1px] pb-7 border-gray-400 p-2">
         {" "}
         {/* Use flex-col for mobile, flex-row for tablet and up */}
@@ -34,7 +34,7 @@ const FilterSortCar = ({ onFilterSort }) => {
             value={searchTerm}
             onChange={handleSearchChange}
             placeholder="Search by model, brand, gear, fuel, color..."
-            className="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2 focus:outline-none" // Removed focus ring styles
+            className="bg-slate-100 dark:bg-gray-800 border-b-[2px] border-b-gray-300 text-gray-800 dark:text-primary text-sm block w-full p-4 focus:outline-none" // Removed focus ring styles
           />
         </div>
         {/* Sort Options */}
@@ -45,13 +45,11 @@ const FilterSortCar = ({ onFilterSort }) => {
           <select
             value={sortOption}
             onChange={handleSortChange}
-            className="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2 focus:outline-none" // Removed focus ring styles
+             className="bg-slate-100 dark:bg-gray-800 border-b-[2px] border-b-gray-300 text-gray-800 dark:text-primary text-sm block w-full p-4 focus:outline-none"
           >
             <option value="">Select Sort Option</option>
             <option value="asc">Alphabetically (A-Z)</option>
             <option value="desc">Alphabetically (Z-A)</option>
-            <option value="price-asc">Price (Low to High)</option>
-            <option value="price-desc">Price (High to Low)</option>
           </select>
         </div>
       </div>
