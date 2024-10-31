@@ -1,6 +1,5 @@
 import React from 'react';
 import TestimonialCard from './TestimonialCard';
-import TestimonialData from '../assets/TestimonialData';
 
 function Testimonial() {
     return (
