@@ -1,5 +1,6 @@
 import React from 'react';
 import TestimonialCard from './TestimonialCard';
+import TestimonialData from '../assets/TestimonialData';
 
 function Testimonial() {
     return (
@@ -10,9 +11,10 @@ function Testimonial() {
                 </div>
                 <ul role="list"
                     class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:mt-20 lg:max-w-none lg:grid-cols-3">
-                    <TestimonialCard ></TestimonialCard>
                     <TestimonialCard></TestimonialCard>
                     <TestimonialCard></TestimonialCard>
+                    <TestimonialCard></TestimonialCard>
+
                 </ul>
             </div>
         </section>

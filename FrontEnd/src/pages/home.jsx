@@ -5,6 +5,7 @@ import aboutimg from "../assets/image/carimg1.jpg";
 import ContactUs from "../components/ContactUs";
 import Accordion from "./Accordion";
 import Testimonial from "../components/Testimonial";
+import Testimonail from "../assets/TestimonialData";
 import faqs from "../assets/faqs";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import car from "../assets/car";
