@@ -6,10 +6,13 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 export default function ContactUs() {
-
   const MySwal = withReactContent(Swal);
-
   const form = useRef();
+
+  // State hooks for input fields
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -25,7 +28,10 @@ export default function ContactUs() {
             text: 'Thank you for contacting us. We will be in touch shortly.',
             icon: 'success'
           });
-
+          // Clear the fields after successful submission
+          setName("");
+          setEmail("");
+          setMessage("");
         },
         (error) => {
           Swal.fire({
@@ -33,12 +39,9 @@ export default function ContactUs() {
             title: "Oops...",
             text: "Something went wrong!"
           });
-
-
-        },
+        }
       );
   };
-
   return (
     <div className="p-20 bg-white dark:bg-gray-900">
       <h2 className="sm:text-5xl font-[700] text-4xl text-red-400 text-center">
@@ -50,8 +53,7 @@ export default function ContactUs() {
         </p>
       </div>
 
-      <div className="flex gap-10 ">
-
+      <div className="flex gap-10">
         <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-5 flex-1 text-gray-800 dark:text-primary">
           <div>
             <label htmlFor="name" className="text-xl">
@@ -60,9 +62,10 @@ export default function ContactUs() {
             <input
               type="text" name="user_name"
               id="name"
-
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name" required
-              className="w-full border-b-[1px] p-4 mt-2 bg-gray-100 dark:bg-gray-800   focus:outline-none"
+              className="w-full border-b-[1px] p-4 mt-2 bg-gray-100 dark:bg-gray-800 focus:outline-none"
             />
           </div>
           <div>
@@ -72,8 +75,10 @@ export default function ContactUs() {
             <input
               type="email" name="user_email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email" required
-              className="w-full border-b-[1px] p-4 mt-2 bg-gray-100 dark:bg-gray-800   focus:outline-none"
+              className="w-full border-b-[1px] p-4 mt-2 bg-gray-100 dark:bg-gray-800 focus:outline-none"
             />
           </div>
           <div>
@@ -83,9 +88,11 @@ export default function ContactUs() {
             <textarea
               id="message"
               name="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
               placeholder="Enter your message"
               rows="5" required
-              className="w-full p-2 mt-2 bg-gray-100 dark:bg-gray-800    border-b-[1px]  focus:outline-none"
+              className="w-full p-2 mt-2 bg-gray-100 dark:bg-gray-800 border-b-[1px] focus:outline-none"
             />
           </div>
 
@@ -96,13 +103,12 @@ export default function ContactUs() {
             </button>
           </div>
         </form>
-        {/* <NotificationContainer />  */}
+
         <div className="flex-1 hidden lg:block relative">
           <img src={contactUsImg} alt="" />
           <div className="absolute bg-black w-full h-full top-0 dark:opacity-20 opacity-0"></div>
         </div>
       </div>
-
     </div>
   );
 }

@@ -104,9 +104,7 @@ const AboutUs = () => {
                 </div>
               </div>
               <div class="rounded-lg overflow-hidden order-none sm:order-first">
-                
-                <MapComponent></MapComponent>
-
+                <MapComponent/>
               </div>
 
             </div>
