@@ -8,7 +8,7 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <div className="h-auto">
+        <div className="h-auto dark:bg-gray-900">
             {/* footer */}
             <footer className="text-red-600 bg-black-200"> {/* Changed background to red-600 and text to white */}
                 <div className="w-full max-w-screen-xl p-4 py-6 mx-auto lg:py-8">
@@ -17,7 +17,7 @@ const Footer = () => {
                             <Link to="/" className="flex items-center">
                                 <img
                                     src={logo}
-                                    className="h-20 me-3"
+                                    className="h-20 m-3 rounded-full me-3 bg-primary"
                                     alt="Flowbite Logo"
                                 />
                                 <span className="self-center text-2xl font-semibold whitespace-nowrap">
@@ -25,14 +25,14 @@ const Footer = () => {
                                 </span>
                                 <br />
                             </Link>
-                                <p className='mb-10 text-gray-700'>Explore a wide range of high-quality cars. Whether you're <br /> looking to buy or sell, we are here to assist you every step of the way.</p>
+                                <p className='m-3 mb-10 text-lg text-gray-700 dark:text-primary'>Explore a wide range of high-quality cars. Whether you're <br /> looking to buy or sell, we are here to assist you every step of the way.</p>
                         </div>
-                        <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-2 justify-items-end">
-                            <div className='mr-7'>
-                                <h2 className="mb-6 text-sm font-semibold uppercase">
+                        <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3 justify-items-end">
+                            <div className='mr-5'>
+                                <h2 className="mb-6 text-lg font-semibold uppercase">
                                     Quick Links
                                 </h2>
-                                <ul className="font-medium text-gray-500">
+                                <ul className="font-medium text-gray-500 dark:text-gray-300">
                                     <li className="mb-4">
                                         <a href="https://flowbite.com/" className="hover:underline">
                                         
@@ -56,30 +56,40 @@ const Footer = () => {
                                     </li>
                                 </ul>
                             </div>
-                            {/* <div>
-                                <h2 className="mb-6 text-sm font-semibold uppercase">
+                            <div className='mr-5'>
+                                <h2 className="mb-6 text-lg font-semibold uppercase ">
                                     Follow Us
                                 </h2>
-                                <ul className="font-medium">
+                                <ul className="font-medium text-gray-500 dark:text-gray-300">
                                     <li className="mb-4">
-                                        <a href="https://github.com/themesberg/flowbite" className="hover:underline ">
-                                            GitHub
+                                        <a href="https://flowbite.com/" className="hover:underline">
+                                            Facebook
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="https://discord.gg/4eeurUVvTy" className="hover:underline ">
-                                            Discord
+                                    <li className="mb-4">
+                                        <a href="https://tailwindcss.com/" className="hover:underline ">
+                                            Instagram
+                                        </a>
+                                    </li>
+                                    <li className="mb-4">
+                                        <a href="https://flowbite.com/" className="hover:underline ">
+                                            Telegram
+                                        </a>
+                                    </li>
+                                    <li >
+                                        <a href="https://tailwindcss.com/" className="hover:underline ">
+                                            Twitter
                                         </a>
                                     </li>
                                 </ul>
-                            </div> */}
+                            </div>
                             <div >
-                                <h2 className="mb-6 text-sm font-semibold uppercase ">
+                                <h2 className="mb-6 text-lg font-semibold uppercase ">
                                     Legal
                                 </h2>
-                                <ul className="font-medium text-gray-500">
+                                <ul className="font-medium text-gray-500 dark:text-gray-300">
                                     <li className="mb-4">
-                                        <a href="#" className="hover:underline ">
+                                        <a href="#" className=" hover:underline">
                                             Privacy Policy
                                         </a>
                                     </li>
@@ -94,27 +104,24 @@ const Footer = () => {
                     </div>
                     <hr className="my-6 border-red-500 sm:mx-auto" /> {/* Changed border color to red-500 */}
                     <div className="sm:flex sm:items-center sm:justify-evenly">
-                        <span className="text-sm sm:text-center">
+                        <span className="text-lg sm:text-center dark:text-gray-300">
                             © {currentYear}{"   "}
                             <Link to="/" className="text-red-600 hover:underline">
                                 Sol Car Trade
                             </Link>
                             . All Rights Reserved.
                         </span>
-                        <div className="flex mt-4 sm:justify-center sm:mt-0">
+                        {/* <div className="flex mt-4 sm:justify-center sm:mt-0">
                             <a href="#" aria-label="Facebook page" className="bg-white text-red-600 pt-[2px] ms-5">
-                                <FacebookOne theme="outline" size="32" fill="#333"/>
-                                <span className="sr-only">Facebook page</span>
+                                <span className="text-sm">Facebook page</span>
                             </a>
-                            <a href="#" className="ms-5" aria-label="Discord community">
-                                <Instagram theme="outline" size="32" fill="#333"/>
+                            <a href="#" className="ms-5" aria-label="Instagram">
                                 <span className="sr-only">Instagram</span>
                             </a>
                             <a href="#" className="ms-5" aria-label="Twitter page">
-                                <Twitter theme="outline" size="32" fill="#333"/>
                                 <span className="sr-only">Twitter page</span>
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </footer>

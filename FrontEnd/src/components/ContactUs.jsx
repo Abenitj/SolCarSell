@@ -45,14 +45,14 @@ export default function ContactUs() {
         Contact Us
       </h2>
       <div className="flex justify-center pt-5">
-        <p className="sm:text-xl text-2xl md:w-1/2 dark:text-primary text-center">
+        <p className="text-2xl text-center sm:text-xl md:w-1/2 dark:text-primary">
           Have a question or need assistance? Reach out to us!
         </p>
       </div>
 
       <div className="flex gap-10 ">
 
-        <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-5 flex-1 text-gray-800 dark:text-primary">
+        <form ref={form} onSubmit={sendEmail} className="flex flex-col flex-1 gap-5 text-gray-800 dark:text-primary">
           <div>
             <label htmlFor="name" className="text-xl">
               Name*
@@ -60,7 +60,6 @@ export default function ContactUs() {
             <input
               type="text" name="user_name"
               id="name"
-
               placeholder="Enter your name" required
               className="w-full border-b-[1px] p-4 mt-2 bg-gray-100 dark:bg-gray-800   focus:outline-none"
             />
@@ -77,7 +76,7 @@ export default function ContactUs() {
             />
           </div>
           <div>
-            <label htmlFor="message" className="text-xl text-gray-800">
+            <label htmlFor="message" className="text-xl">
               Message*
             </label>
             <textarea
@@ -97,9 +96,9 @@ export default function ContactUs() {
           </div>
         </form>
         {/* <NotificationContainer />  */}
-        <div className="flex-1 hidden lg:block relative">
+        <div className="relative flex-1 hidden lg:block">
           <img src={contactUsImg} alt="" />
-          <div className="absolute bg-black w-full h-full top-0 dark:opacity-20 opacity-0"></div>
+          <div className="absolute top-0 w-full h-full bg-black opacity-0 dark:opacity-20"></div>
         </div>
       </div>
 
