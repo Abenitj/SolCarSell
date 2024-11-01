@@ -1,18 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom for navigation
-import logo from "../assets/image/logo.jpg";
-import {FacebookOne, Instagram, Twitter} from '@icon-park/react';
 
 const Footer = () => {
-
-    const currentYear = new Date().getFullYear();
-
     return (
         <div className="h-auto dark:bg-gray-900">
             {/* footer */}
-            <footer className="text-red-600 bg-black-200"> {/* Changed background to red-600 and text to white */}
+            <footer className="text-red-600 bg-red-100"> {/* Changed background to red-600 and text to white */}
                 <div className="w-full max-w-screen-xl p-4 py-6 mx-auto lg:py-8">
-                    <div className="md:flex md:justify-around">
+                    <div className="md:flex md:justify-between">
                         <div className="mb-6 md:mb-0">
                             <Link to="/" className="flex items-center">
                                 <img
@@ -23,7 +18,6 @@ const Footer = () => {
                                 <span className="self-center text-2xl font-semibold whitespace-nowrap">
                                     Sol Car Trade
                                 </span>
-                                <br />
                             </Link>
                                 <p className='m-3 mb-10 text-lg text-gray-700 dark:text-primary'>Explore a wide range of high-quality cars. Whether you're <br /> looking to buy or sell, we are here to assist you every step of the way.</p>
                         </div>
@@ -34,24 +28,13 @@ const Footer = () => {
                                 </h2>
                                 <ul className="font-medium text-gray-500 dark:text-gray-300">
                                     <li className="mb-4">
-                                        <a href="https://flowbite.com/" className="hover:underline">
-                                        
-                                            Home
+                                        <a href="https://flowbite.com/" className="text-red-600 hover:underline">
+                                            Flowbite
                                         </a>
                                     </li>
-                                    <li className="mb-4">
-                                        <a href="https://tailwindcss.com/" className="hover:underline ">
-                                            About Us
-                                        </a>
-                                    </li>
-                                    <li className="mb-4">
-                                        <a href="https://flowbite.com/" className="hover:underline ">
-                                            Car Listing
-                                        </a>
-                                    </li>
-                                    <li >
-                                        <a href="https://tailwindcss.com/" className="hover:underline ">
-                                            About Us
+                                    <li>
+                                        <a href="https://tailwindcss.com/" className="text-red-600 hover:underline">
+                                            Tailwind CSS
                                         </a>
                                     </li>
                                 </ul>
@@ -94,7 +77,7 @@ const Footer = () => {
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" className="hover:underline e">
+                                        <a href="#" className="hover:underline text-red-600e">
                                             Terms & Conditions
                                         </a>
                                     </li>

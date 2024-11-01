@@ -4,6 +4,19 @@
 html {
     scroll-behavior: smooth;
   }
+  /* admin panel */
+  .dark-theme {
+    background-color: #1F2937;
+    color: #D1D5DB;
+  }
+  
+  .light-theme {
+    background-color: #FFFFFF;
+    color: #374151;
+  }
+  
+  /* Optional: Add any additional theme-specific styles here */
+  
   
 :root {
   --primary: #fff;

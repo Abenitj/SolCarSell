@@ -1,65 +1,17 @@
 import React, { useState } from "react";
 import HeroSection from "../components/HeroSection ";
 import HomeHeader from "../components/homeHeader";
-import img1 from "../assets/image/herocar1.jpg";
-import img2 from "../assets/image/herocar2.jpg";
-import img3 from "../assets/image/herocar3.jpg";
 import aboutimg from "../assets/image/carimg1.jpg";
 import ContactUs from "../components/ContactUs";
 import Accordion from "./Accordion";
 import Testimonial from "../components/Testimonial";
-import Testimonail from "../assets/TestimonialData";
 import faqs from "../assets/faqs";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import car from "../assets/car";
 
 const Home = () => {
+// Example usage in a component
   const [loading, setLoading] = useState(true); // For loading state
-
-  const cars = [
-    {
-      id: 1,
-      make: "Toyota",
-      model: "Camry",
-      price: "$20,000",
-      image: img1,
-    },
-    {
-      id: 2,
-      make: "Honda",
-      model: "Accord",
-      price: "$22,000",
-      image: img2,
-    },
-    {
-      id: 3,
-      make: "Ford",
-      model: "Mustang",
-      price: "$30,000",
-      image: img3,
-    },
-    {
-      id: 3,
-      make: "Ford",
-      model: "Mustang",
-      price: "$30,000",
-      image: img3,
-    },
-    {
-      id: 1,
-      make: "Toyota",
-      model: "Camry",
-      price: "$20,000",
-      image: img1,
-    },
-    {
-      id: 2,
-      make: "Honda",
-      model: "Accord",
-      price: "$22,000",
-      image: img2,
-    },
-  ];
-
   return (
     <div>
       <HomeHeader />
@@ -82,10 +34,10 @@ const Home = () => {
 
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {cars.map((car) => (
+              {car.map((car,index) => (
                 <Link
                   to="/carlistings" // Navigate to /carlistings on card click
-                  key={car.id}
+                  key={index}
                   className="relative group shadow-sm overflow-hidden"
                 >
                   <img
@@ -128,7 +80,7 @@ const Home = () => {
       <section className="md:min-h-[90vh] dark:bg-gray-800 dark:text-primary h-full sm:w-full md:text-left text-center w-full py-5 flex flex-col md:flex-row md:justify-center md:items-center">
         <div className="md:w-[40%] p-5">
           <h1 className="md:text-6xl text-4xl font-bold text-red-400">
-            About Us
+          About Us 
           </h1>
           <h2 className="md:text-4xl text-2xl font-bold mt-4">
             We Prioritize Customer Satisfaction
@@ -189,3 +141,5 @@ const Home = () => {
 };
 
 export default Home;
+
+
