@@ -1,7 +1,7 @@
 import React from "react";
 
 // Function to format price with commas and three decimal places
-function formatPrice(price) {
+const  formatPrice=(price)=>{
   if (price !== null) {
     return new Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,

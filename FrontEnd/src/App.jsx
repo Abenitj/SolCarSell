@@ -8,15 +8,13 @@ import ContactUs from './components/ContactUs';
 import Header from './components/header';
 import ScrollToTop from './components/ScrollToTop';
 import AdminLayout from './AdminPanel/AdminLayout';
-import AdminRoutes from './AdminPanel/routes/AdminRoutes';
 import Dashboard from './AdminPanel/pages/Dashboard';
-import AddCar from './AdminPanel/pages/inventory/AddCar';
 import AllCars from './AdminPanel/pages/inventory/AllCars';
-import Settings from './AdminPanel/pages/Settings';
-
-// In your main routing setup:
-
-
+import AddCar from './AdminPanel/pages/inventory/AddCar';
+import Table from '../Template/Table';
+import UpdateCar from './AdminPanel/pages/inventory/UpdateCar';
+import Test from './AdminPanel/pages/test';
+import RowDetail from './AdminPanel/pages/inventory/RowDetail';
 const App = () => {
   return (
     <Router>
@@ -25,18 +23,22 @@ const App = () => {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='about' element={<AboutUs />} />
+         
           <Route path='CarListings' element={<CarListing />} />
           <Route path='contact' element={<ContactUs />} />
         </Route>
+        <Route path='/table' element={<Table />} />
+        <Route path='/test' element={<Test />} />
         <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Navigate to={<Dashboard/>} replace />}/>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="inventory">
-          <Route path="all" element={<AllCars />} />
-          <Route path="add" element={<AddCar />} />
+          <Route index element={<Dashboard/>} />
+          
+          <Route path='inventory'>
+            <Route path='all' element={<AllCars/>} />
+            <Route path='add' element={<AddCar/>} />
+            <Route path='update' element={<UpdateCar/>}/>
+            <Route path='row-detail' element={<RowDetail/>}/>
+          </Route>
         </Route>
-        <Route path="settings" element={<Settings />} />
-      </Route>
       </Routes>
     </Router>
   );

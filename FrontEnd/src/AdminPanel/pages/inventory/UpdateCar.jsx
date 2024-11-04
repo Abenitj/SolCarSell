@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
-const AddCar = () => {
+const UpdateCar = ({ onUpdate }) => {
+  const navigate=useNavigate();
+  const location = useLocation();
+  const { existingCarData } = location.state || {}; // Access car data from route state
   const [carData, setCarData] = useState({
     brand: '',
     price: '',
@@ -14,7 +18,31 @@ const AddCar = () => {
     images: []
   });
 
+
+
   const [errors, setErrors] = useState({});
+
+  // Use useEffect to set the form fields with existing car data
+  useEffect(() => {
+    if (existingCarData) {
+      setCarData({
+        brand: existingCarData.brand,
+        price: existingCarData.price,
+        year: existingCarData.year,
+        description: existingCarData.description,
+        status: existingCarData.status,
+        model: existingCarData.model,
+        color: existingCarData.color,
+        gear: existingCarData.gear,
+        fuel_type: existingCarData.fuel_type,
+        images: existingCarData.images || []
+      });
+    }
+    else
+    {
+      alert("not working")
+    }
+  }, [existingCarData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +52,7 @@ const AddCar = () => {
     } else {
       // Handle successful form submission
       console.log(carData);
+      onUpdate(carData); // Call onUpdate to handle the update logic
       setErrors({}); // Clear errors on successful submission
     }
   };
@@ -48,8 +77,8 @@ const AddCar = () => {
 
   const validate = (data) => {
     const errors = {};
-    if (!data.brand) {
-      errors.name = 'Car Brand is required';
+    if (!data.name) {
+      errors.name = 'Car name is required';
     }
     if (!data.price || data.price <= 0) {
       errors.price = 'Price must be a positive number';
@@ -80,23 +109,23 @@ const AddCar = () => {
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold mb-6 dark:text-white">Add New Car</h2>
+      <h2 className="text-xl font-semibold mb-6 dark:text-white">Update Car</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex flex-wrap space-x-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Car Name
+            Brand
             </label>
             <input
               type="text"
-              name="name"
-              value={carData.name}
+              name="brand"
+              value={carData.brand}
               onChange={handleChange}
-              placeholder="Enter Brand"
+              placeholder="Enter  Brand"
               className={`w-full px-3 py-3 border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
               required
             />
-            {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
+            {errors.brand && <p className="text-red-500 text-xs">{errors.brand}</p>}
           </div>
 
           <div className="flex-1">
@@ -206,8 +235,7 @@ const AddCar = () => {
             rows="4"
             placeholder="Enter description"
             className={`w-full px-3 py-3 border ${errors.description ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
-            required
-          ></textarea>
+          />
           {errors.description && <p className="text-red-500 text-xs">{errors.description}</p>}
         </div>
 
@@ -219,10 +247,10 @@ const AddCar = () => {
             name="status"
             value={carData.status}
             onChange={handleChange}
-            className={`w-full px-3 py-3 border ${errors.status ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
+            className="w-full px-3 py-3 border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           >
             <option value="Available">Available</option>
-            <option value="Not Available Sold">Not Available</option>
+            <option value="Not Available">Not Available</option>
           </select>
         </div>
 
@@ -232,25 +260,31 @@ const AddCar = () => {
           </label>
           <input
             type="file"
-            onChange={handleImageChange}
             multiple
-            className={`w-full px-3 py-3 border ${errors.images ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
+            onChange={handleImageChange}
+            className="w-full px-3 py-3 border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           />
           {errors.images && <p className="text-red-500 text-xs">{errors.images}</p>}
         </div>
 
-        <div className='flex justify-end space-x-2'>
+      <div className='flex justify-end space-x-2'>
       <button
           type="submit"
           className="w-[15%]  bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none"
         >
-          Add Car
+          Update Car
+        </button>
+
+        <button
+          className="w-[10%] bg-gray-200 text-gray-900 dark:text-gray-900 py-2 rounded-md hover:bg-gray-300  focus:outline-none"
+          onClick={()=>navigate('/admin/inventory/all')}
+        >
+        back
         </button>
       </div>
       </form>
- 
     </div>
   );
 };
 
-export default AddCar;
+export default UpdateCar;

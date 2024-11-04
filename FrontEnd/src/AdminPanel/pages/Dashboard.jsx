@@ -15,12 +15,6 @@ const Dashboard = () => {
       icon: <BsCashCoin className="text-green-500 text-2xl" />,
       change: "+8%"
     },
-    {
-      title: "Active Users",
-      value: "832",
-      icon: <BsPeopleFill className="text-purple-500 text-2xl" />,
-      change: "+24%"
-    }
   ];
 
   return (
@@ -32,7 +26,7 @@ const Dashboard = () => {
               <div>
                 <p className="text-gray-500 dark:text-gray-400">{stat.title}</p>
                 <h3 className="text-2xl font-bold mt-2 dark:text-white">{stat.value}</h3>
-                <span className="text-green-500 text-sm">{stat.change} from last month</span>
+                <span className="text-green-500 text-sm">sole car trade</span>
               </div>
               {stat.icon}
             </div>

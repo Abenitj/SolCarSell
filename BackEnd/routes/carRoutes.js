@@ -33,9 +33,10 @@ const update = multer({
 }).single('image'); 
 
 // Routes
-router.post('/', upload, createCar); // Create car
+
 router.get('/', getAllCars); // Get all cars
 router.get('/:id', getCarById); // Get car by ID
+router.post('/', upload, createCar); // Create car
 router.put('/:id', upload, updateCar); // Update car by ID
 router.delete('/:id', deleteCar); // Delete car by ID
 

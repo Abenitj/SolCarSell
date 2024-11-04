@@ -17,7 +17,6 @@ const carSchema = Joi.object({
 // Create a car
 const createCar = async (req, res) => {
     try {
-        console.log(req.body);
         const { error } = carSchema.validate(req.body);
         if (error) return res.status(400).send(error.details[0].message);
 

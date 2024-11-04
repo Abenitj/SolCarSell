@@ -19,7 +19,7 @@ const AdminLayout = ({ children }) => {
   const menuItems = [
     {
       title: 'Dashboard',
-      path: '/admin/dashboard',
+      path: '/admin',
       icon: <BsSpeedometer2 className="text-xl" />,
     },
     {
@@ -30,11 +30,6 @@ const AdminLayout = ({ children }) => {
         { title: 'All Cars', path: '/admin/inventory/all' },
         { title: 'Add New Car', path: '/admin/inventory/add' },
       ]
-    },
-    {
-      title: 'Settings',
-      path: '/admin/settings',
-      icon: <AiOutlineSetting className="text-xl" />,
     },
   ];
 
