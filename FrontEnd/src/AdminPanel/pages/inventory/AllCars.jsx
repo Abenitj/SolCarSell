@@ -2,12 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useNavigation } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash, faFileExport, faImages } from '@fortawesome/free-solid-svg-icons';
 import * as XLSX from 'xlsx';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { getAll } from '../../../api/read';
+
 
 const AllCars = () => {
   const [filterText, setFilterText] = useState('');
+  const [cars, setCars] = useState([]);
+  
+  const { data } = getAll(import.meta.env.VITE_BACK_END_API_URL);
+  useEffect(() => {
+    // Only set cars when data is available and is an array
+    if (data && Array.isArray(data)) {
+      setCars(data);
+    }
+  }, [data]);
+
   const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
   const navigate = useNavigate();
   useEffect(() => {
@@ -143,118 +155,7 @@ const AllCars = () => {
   // Combine styles based on current theme
   const customStyles = isDark ? darkModeStyles : lightModeStyles;
 
-  const cars = [
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2004",
-      price: 1.00,
-      status: "Available",
-      color: "blue",
-      gear: "Manual",
-      fuel_type: "Benzine",
-      description: "A reliable and fuel-efficient sedan with a manual transmission. A reliable and fuel-efficient sedan with a manual transmission. A reliable and fuel-efficient sedan with a manual transmission. A reliable and fuel-efficient sedan with a manual transmission. A reliable and fuel-efficient sedan with a manual transmission. A reliable and fuel-efficient sedan with a manual transmission.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2006",
-      price: 1.20,
-      status: "Available",
-      color: "red",
-      gear: "Automatic",
-      fuel_type: "Benzine",
-      description: "A compact car perfect for city driving, equipped with an automatic transmission.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2008",
-      price: 1.50,
-      status: "Available",
-      color: "green",
-      gear: "Manual",
-      fuel_type: "Diesel",
-      description: "Durable and efficient, ideal for long trips with a manual gearbox.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2010",
-      price: 2.00,
-      status: "Not Available",
-      color: "black",
-      gear: "Automatic",
-      fuel_type: "Benzine",
-      description: "Stylish sedan with modern features and a smooth automatic transmission.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2012",
-      price: 2.50,
-      status: "Available",
-      color: "white",
-      gear: "Manual",
-      fuel_type: "Hybrid",
-      description: "A hybrid model offering great fuel efficiency and eco-friendly driving.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2014",
-      price: 3.00,
-      status: "Available",
-      color: "silver",
-      gear: "Manual",
-      fuel_type: "Diesel",
-      description: "A reliable diesel sedan, known for its low fuel consumption and high durability.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2016",
-      price: 3.50,
-      status: "Available",
-      color: "blue",
-      gear: "Automatic",
-      fuel_type: "Benzine",
-      description: "A modern sedan with advanced features and a fuel-efficient engine.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2018",
-      price: 4.00,
-      status: "Not Available",
-      color: "gray",
-      gear: "Manual",
-      fuel_type: "Diesel",
-      description: "Perfect for long-distance travel with a reliable diesel engine and manual transmission.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2020",
-      price: 4.50,
-      status: "Available",
-      color: "maroon",
-      gear: "Automatic",
-      fuel_type: "Hybrid",
-      description: "A hybrid sedan with the latest technology for an eco-friendly ride.",
-    },
-    {
-      brand: "aa",
-      year:200,
-      model: "rolla 2022",
-      price: 5.00,
-      status: "Available",
-      color: "navy",
-      gear: "Manual",
-      fuel_type: "Electric",
-      description: "A fully electric model, ideal for those seeking zero emissions and high efficiency.",
-    },
-  ];
+
 
   const columns = [
     {
@@ -274,9 +175,9 @@ const AllCars = () => {
       sortable: true,
       cell: (row) => (
         <span
-          className={`px-2  py-1 text-sm font-medium rounded-full ${row.status === 'Available'
-              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-              : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+          className={`px-2 w-96 text-center  py-1 text-sm font-medium rounded-full ${row.status === 'Available'
+            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
+            : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
             }`}
         >
           {row.status}
@@ -316,14 +217,21 @@ const AllCars = () => {
     {
       name: 'Actions',
       cell: (row) => (
-        <div className="flex gap-3">
+        <div className="flex">
+          <button
+            className="p-2 text-orange-600 hover:bg-orange-50 dark:text-orange-400 dark:hover:bg-orange-900/50 rounded-md transition-colors duration-200"
+            onClick={() => handleImageGallery(row.images)}
+            aria-label="Gallery"
+          >
+            <FontAwesomeIcon icon={faImages} aria-label="gallery" />
+          </button>
 
           <button
-            className="p-2 text-green-600 hover:bg-blue-50 dark:text-green-400 dark:hover:bg-blue-900/50 rounded-md transition-colors duration-200"
+            className="p-2 text-green-600 hover:bg-blue-50 dark:text-green-400 dark:hover:bg-green-900/50 rounded-md transition-colors duration-200"
             onClick={() => handleRowDetail(row)}
             aria-label="Edit"
           >
-            <FontAwesomeIcon  icon={faEye}
+            <FontAwesomeIcon icon={faEye}
               aria-label="eye" // Optional: Adds a pointer cursor on hover
             />
           </button>
@@ -346,9 +254,14 @@ const AllCars = () => {
     },
   ];
 
-  const handleEdit = (val) => {
-    navigate("/admin/inventory/update", { state: { existingCarData: val } });
+  const handleEdit = (row) => {
+    navigate("/admin/inventory/update", { state: { existingCarData: row } });
   };
+  const handleImageGallery = (row) => {
+    const carImagesArray = Array.isArray(row) ? row : [row];
+    navigate("/admin/inventory/car-gallery", { state: { carImages: carImagesArray } })
+  }
+
   const handleRowDetail = (row) => {
     // use useNavigate hook to route as well as to send data 
     navigate("/admin/inventory/row-detail", { state: { data: row } })
@@ -400,7 +313,7 @@ const AllCars = () => {
   );
 
   return (
-    <div className="bg-primary dark:bg-gray-800 rounded-lg shadow-md">
+    <div className="bg-primary dark:bg-gray-800 rounded-lg ">
       <div className="p-6 dark:bg-gray-800 bg-primary">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">Inventory Management</h2>
@@ -416,7 +329,7 @@ const AllCars = () => {
           paginationRowsPerPageOptions={[5, 10, 25, 50]}
           subHeaderComponent={subHeaderComponent}
           customStyles={customStyles}
-          noDataComponent={<div className='dark:bg-gray-800  w-full text-center text-white p-3'>There are no records to display</div>}
+          noDataComponent={<div className='dark:bg-gray-800 text-gray-900  w-full text-center dark:text-white p-3'>There are no records to display</div>}
         />
       </div>
     </div>

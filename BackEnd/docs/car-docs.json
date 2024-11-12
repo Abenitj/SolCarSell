@@ -1,0 +1,356 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Car API",
+    "version": "1.0.0",
+    "description": "API documentation for managing cars with images",
+    "contact": {
+      "name": "API Support",
+      "email": "support@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/cars": {
+      "get": {
+        "summary": "Get all cars",
+        "description": "Retrieve a list of all cars",
+        "responses": {
+          "200": {
+            "description": "A list of cars with images",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Car"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new car with images",
+        "description": "Add a new car to the database with up to 5 images",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Car created successfully with images",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{id}": {
+      "get": {
+        "summary": "Get a car by ID",
+        "description": "Retrieve a car by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the car to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A car object with images",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a car by ID",
+        "description": "Update an existing car's details",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the car to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Car updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a car by ID",
+        "description": "Delete a car from the database by its ID, including its images",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the car to delete"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Car deleted successfully"
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      }
+    },
+    "/cars/{id}/images/{imageIndex}": {
+      "delete": {
+        "summary": "Delete a single image from the car",
+        "description": "Delete a specific image from a car's image array",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the car"
+          },
+          {
+            "name": "imageIndex",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Index of the image to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image deleted successfully from car"
+          },
+          "404": {
+            "description": "Car or image not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a single image for a car",
+        "description": "Update a specific image for a car",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the car"
+          },
+          {
+            "name": "imageIndex",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Index of the image to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image updated successfully"
+          },
+          "404": {
+            "description": "Car or image not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Car": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for a car"
+          },
+          "brand": {
+            "type": "string",
+            "description": "The brand of the car"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model of the car"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the car"
+          },
+          "gear": {
+            "type": "string",
+            "description": "The type of gear (e.g., Manual, Automatic)"
+          },
+          "fuel_type": {
+            "type": "string",
+            "description": "The type of fuel used by the car"
+          },
+          "price": {
+            "type": "number",
+            "description": "The price of the car"
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the car"
+          },
+          "year": {
+            "type": "integer",
+            "description": "The manufacturing year of the car"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "The image file name"
+            }
+          }
+        },
+        "example": {
+          "id": "abc123",
+          "brand": "Toyota",
+          "model": "Camry",
+          "color": "Red",
+          "gear": "Automatic",
+          "fuel_type": "Gasoline",
+          "price": 25000,
+          "description": "A comfortable family car",
+          "year": 2021,
+          "images": ["image1.jpg", "image2.jpg"]
+        }
+      },
+      "CarInput": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "description": "The brand of the car"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model of the car"
+          },
+          "color": {
+            "type": "string",
+            "description": "The color of the car"
+          },
+          "gear": {
+            "type": "string",
+            "description": "The type of gear"
+          },
+          "fuel_type": {
+            "type": "string",
+            "description": "The type of fuel used"
+          },
+          "price": {
+            "type": "number",
+            "description": "The price of the car"
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the car"
+          },
+          "year": {
+            "type": "integer",
+            "description": "The year the car was manufactured"
+          }
+        },
+        "required": ["brand", "model", "year"],
+        "example": {
+          "brand": "Honda",
+          "model": "Civic",
+          "color": "Blue",
+          "gear": "Manual",
+          "fuel_type": "Gasoline",
+          "price": 20000,
+          "description": "A reliable sedan",
+          "year": 2020
+        }
+      }
+    }
+  }
+}

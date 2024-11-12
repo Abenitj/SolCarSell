@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-
+import { Update } from '../../../api/update';
 const UpdateCar = ({ onUpdate }) => {
   const navigate=useNavigate();
   const location = useLocation();
@@ -15,7 +15,7 @@ const UpdateCar = ({ onUpdate }) => {
     color: '',
     gear: '',
     fuel_type: '',
-    images: []
+    images: [],
   });
 
 
@@ -35,7 +35,8 @@ const UpdateCar = ({ onUpdate }) => {
         color: existingCarData.color,
         gear: existingCarData.gear,
         fuel_type: existingCarData.fuel_type,
-        images: existingCarData.images || []
+        images: existingCarData.images || [],
+        id:existingCarData._id
       });
     }
     else
@@ -44,16 +45,21 @@ const UpdateCar = ({ onUpdate }) => {
     }
   }, [existingCarData]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async(e) => {
     e.preventDefault();
     const validationErrors = validate(carData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
-      // Handle successful form submission
-      console.log(carData);
-      onUpdate(carData); // Call onUpdate to handle the update logic
-      setErrors({}); // Clear errors on successful submission
+      const url=import.meta.env.VITE_BACK_END_API_URL;
+      const response=await Update(`${url}${carData.id}`,carData,carData)
+
+      if(response)
+        {
+          
+          setErrors({}); // Clear errors on successful submission
+          navigate("/admin/inventory/all")
+        }
     }
   };
 
@@ -77,8 +83,8 @@ const UpdateCar = ({ onUpdate }) => {
 
   const validate = (data) => {
     const errors = {};
-    if (!data.name) {
-      errors.name = 'Car name is required';
+    if (!data.brand) {
+      errors.brand = 'Car name is required';
     }
     if (!data.price || data.price <= 0) {
       errors.price = 'Price must be a positive number';
@@ -253,20 +259,6 @@ const UpdateCar = ({ onUpdate }) => {
             <option value="Not Available">Not Available</option>
           </select>
         </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Upload Images
-          </label>
-          <input
-            type="file"
-            multiple
-            onChange={handleImageChange}
-            className="w-full px-3 py-3 border border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          />
-          {errors.images && <p className="text-red-500 text-xs">{errors.images}</p>}
-        </div>
-
       <div className='flex justify-end space-x-2'>
       <button
           type="submit"

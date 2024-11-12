@@ -15,8 +15,10 @@ import Table from '../Template/Table';
 import UpdateCar from './AdminPanel/pages/inventory/UpdateCar';
 import Test from './AdminPanel/pages/test';
 import RowDetail from './AdminPanel/pages/inventory/RowDetail';
+import CarGallery from './AdminPanel/pages/inventory/CarGallery';
 const App = () => {
   return (
+    
     <Router>
       <ScrollToTop />
       <Routes>
@@ -37,6 +39,7 @@ const App = () => {
             <Route path='add' element={<AddCar/>} />
             <Route path='update' element={<UpdateCar/>}/>
             <Route path='row-detail' element={<RowDetail/>}/>
+            <Route path='car-gallery' element={<CarGallery/>}/>
           </Route>
         </Route>
       </Routes>

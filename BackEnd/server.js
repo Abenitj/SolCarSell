@@ -1,49 +1,43 @@
-require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const helmet = require('helmet');
-const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
-const session = require('express-session');
+const dotenv = require('dotenv');
+const carRoutes = require('./routers/carRouter');
+const carDocs=require("./docs/car-docs.json")
+const swaggerUi = require('swagger-ui-express');
+const cors=require('cors')
+// Load environment variables from .env file
+dotenv.config();
 
-const carRoutes = require('./routes/carRoutes');
-const userRoutes = require('./routes/userRoutes');
-
+// Set up the Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middleware
-app.use(cors());
-app.use(helmet());
+app.use(cors())
+// Middleware to parse JSON requests
 app.use(express.json());
+// Serve static files from the 'uploads' folder/
 app.use('/uploads', express.static('uploads'));
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-}));
 
-// Data sanitization against NoSQL query injection
-app.use(mongoSanitize());
 
-// Data sanitization against XSS
-app.use(xss());
 
-// Routes
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch(err => {
+    console.error('Error connecting to MongoDB', err);
+  });
+
+
+
+// Use car routes
 app.use('/cars', carRoutes);
-app.use('/users', userRoutes);
-
-// Connect to MongoDB Atlas
-const mongoURI = process.env.MONGO_URI;
-mongoose.connect(mongoURI)
-    .then(() => {
-        console.log('MongoDB connected')
-        // Start the server
-        app.listen(PORT, () => {
-            console.log(`Server is running on http://localhost:${PORT}`);
-        });
-    })
-    .catch(err => console.error('MongoDB connection error:', err));
+// Swagger route
+app.use('/car-docs', swaggerUi.serve, swaggerUi.setup(carDocs));
 
 
+// Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

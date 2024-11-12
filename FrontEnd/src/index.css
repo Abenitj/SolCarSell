@@ -33,5 +33,20 @@ html {
   --secondary-v3: #1e2630;
   --neutral: #F9F6F7;
 }
+/* Add this CSS to your stylesheet */
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
 
 

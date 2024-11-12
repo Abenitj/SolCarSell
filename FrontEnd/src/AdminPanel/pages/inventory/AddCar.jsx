@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-
+import { createCar } from '../../../api/create';
+import { useNavigate } from 'react-router-dom';
 const AddCar = () => {
+  const navigate=useNavigate();
   const [carData, setCarData] = useState({
     brand: '',
     price: '',
     year: '',
     description: '',
-    status: 'Available',
     model: '',
     color: '',
     gear: '',
@@ -16,15 +17,49 @@ const AddCar = () => {
 
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+   
     e.preventDefault();
+ 
     const validationErrors = validate(carData);
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+      setErrors(validationErrors); 
     } else {
-      // Handle successful form submission
-      console.log(carData);
-      setErrors({}); // Clear errors on successful submission
+      const formData = new FormData();
+      // Append form fields
+      formData.append('brand', carData.brand);
+      formData.append('price', carData.price);
+      formData.append('year', carData.year);
+      formData.append('description', carData.description);
+      formData.append('model', carData.model);
+      formData.append('color', carData.color);
+      formData.append('gear', carData.gear);
+      formData.append('fuel_type', carData.fuel_type);
+      // Append images
+      carData.images.forEach((file, index) => {
+        formData.append('images', file);
+      });
+
+      try {
+        
+        const backend_url = import.meta.env.VITE_BACK_END_API_URL;
+        const data = await createCar(formData,backend_url); // Call createCar to send the request
+        console.log('Car created successfully', data);
+        setCarData({
+          brand: '',
+          price: '',
+          year: '',
+          description: '',
+          model: '',
+          color: '',
+          gear: '',
+          fuel_type: '',
+          images: []
+        });
+        setErrors({});
+      } catch (error) {
+        console.error('Error creating car:', error);
+      }
     }
   };
 
@@ -81,7 +116,7 @@ const AddCar = () => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <h2 className="text-xl font-semibold mb-6 dark:text-white">Add New Car</h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form className="space-y-6">
         <div className="flex flex-wrap space-x-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -89,8 +124,8 @@ const AddCar = () => {
             </label>
             <input
               type="text"
-              name="name"
-              value={carData.name}
+              name="brand"
+              value={carData.brand}
               onChange={handleChange}
               placeholder="Enter Brand"
               className={`w-full px-3 py-3 border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
@@ -210,22 +245,6 @@ const AddCar = () => {
           ></textarea>
           {errors.description && <p className="text-red-500 text-xs">{errors.description}</p>}
         </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Status
-          </label>
-          <select
-            name="status"
-            value={carData.status}
-            onChange={handleChange}
-            className={`w-full px-3 py-3 border ${errors.status ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
-          >
-            <option value="Available">Available</option>
-            <option value="Not Available Sold">Not Available</option>
-          </select>
-        </div>
-
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Upload Images
@@ -239,16 +258,22 @@ const AddCar = () => {
           {errors.images && <p className="text-red-500 text-xs">{errors.images}</p>}
         </div>
 
-        <div className='flex justify-end space-x-2'>
+     
+      </form>
+      <div className='flex justify-end space-x-2'>
       <button
-          type="submit"
+         onClick={handleSubmit}
           className="w-[15%]  bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none"
         >
           Add Car
         </button>
+        <button
+          className="w-[10%]  bg-slate-100   text-gray-900 py-2 rounded-md hover:bg-gray-200 focus:outline-none"
+          onClick={()=>navigate('/admin/inventory/all')}
+        >
+          back
+        </button>
       </div>
-      </form>
- 
     </div>
   );
 };
