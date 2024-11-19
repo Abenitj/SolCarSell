@@ -90,32 +90,38 @@ exports.updateCar = async (req, res) => {
     }
 };
 
+
 // Delete a car by ID
 exports.deleteCar = async (req, res) => {
     try {
-        const carId = req.params.id.trim();  // Ensure no extra spaces or newlines
+        const carId = req.params.id.trim(); // Ensure no extra spaces or newlines
         const car = await Car.findByIdAndDelete(carId);
         if (!car) return res.status(404).json({ message: 'Car not found' });
 
         // Delete images from the server
         car.images.forEach(image => {
             const imagePath = path.join(__dirname, '../uploads/cars', image);
-            console.log('Attempting to delete:', imagePath);  // Log the path for debugging
+            console.log('Attempting to delete:', imagePath); // Log the path for debugging
 
             // Check if the file exists before attempting to delete
             if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);  // Delete image file from the server
+                fs.unlinkSync(imagePath); // Delete image file from the server
             } else {
                 console.log(`File does not exist: ${imagePath}`);
             }
         });
 
-        res.status(200).json({ message: 'Car deleted successfully' });
+        // Fetch the updated list of cars
+        const updatedCars = await Car.find(); // Assuming `Car.find()` fetches all cars
+
+        res.status(200).json({ 
+            message: 'Car deleted successfully', 
+            data: updatedCars // Send the updated list of cars
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
-
 // Delete a single image from car
 // Delete a single image from car
 exports.deleteImage = async (req, res) => {
@@ -150,11 +156,14 @@ exports.deleteImage = async (req, res) => {
                 }
 
                 console.log(`Successfully deleted image: ${imagePath}`);
-
+ 
                 // Save the car with the updated images array
                 car.save()
                     .then(() => {
-                        res.status(200).json({ message: 'Image deleted successfully', car });
+                        const baseURL = `${process.env.BASE_URL}/uploads/cars/`;  // The base URL for your image directory
+                        res.status(200).json({
+                            images: car.images.map((image) => `${baseURL}${image}`) // Corrected mapping to `car.images`
+                        });
                     })
                     .catch(saveErr => {
                         console.error('Error saving the car:', saveErr);
@@ -199,8 +208,13 @@ exports.updateImage = async (req, res) => {
         // Update the car image
         car.images[imageIndex] = newImage;
         await car.save();
+        const baseURL = `${process.env.BASE_URL}/uploads/cars/`;  // The base URL for your image directory
 
-        res.status(200).json({ message: 'Image updated successfully', car });
+        res.status(200).json({
+            id:car._id,
+            images: car.images.map((image) => `${baseURL}${image}`) // Corrected mapping to `car.images`
+        });
+        
     } catch (err) {
         console.error('Error in updateImage function:', err);
         res.status(500).json({ error: err.message });

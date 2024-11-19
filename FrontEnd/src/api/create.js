@@ -8,11 +8,9 @@ export const createCar = async (formData,url) => {
       },
 
     });
-    console.log(formData)
-    alert("triggered")
     return response.data; // This will be the response from your API
   } catch (error) {
-    console.error('Error creating car:', error);
+    console.error('Error creating car:', error.response.data.error);
     throw error; // Throw the error so it can be handled in the component
   }
 };

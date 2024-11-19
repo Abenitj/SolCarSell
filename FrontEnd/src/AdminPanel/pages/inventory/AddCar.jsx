@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { createCar } from '../../../api/create';
 import { useNavigate } from 'react-router-dom';
+import ErrorMessage from '../../../components/ErrorMessage';
+
 const AddCar = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [carData, setCarData] = useState({
     brand: '',
     price: '',
@@ -18,12 +20,12 @@ const AddCar = () => {
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
-   
+
     e.preventDefault();
- 
+
     const validationErrors = validate(carData);
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors); 
+      setErrors(validationErrors);
     } else {
       const formData = new FormData();
       // Append form fields
@@ -41,9 +43,9 @@ const AddCar = () => {
       });
 
       try {
-        
+
         const backend_url = import.meta.env.VITE_BACK_END_API_URL;
-        const data = await createCar(formData,backend_url); // Call createCar to send the request
+        const data = await createCar(formData, backend_url); // Call createCar to send the request
         console.log('Car created successfully', data);
         setCarData({
           brand: '',
@@ -58,7 +60,7 @@ const AddCar = () => {
         });
         setErrors({});
       } catch (error) {
-        console.error('Error creating car:', error);
+        setErrors({ file: error?.response?.data?.error || 'An unexpected error occurred' });
       }
     }
   };
@@ -114,8 +116,8 @@ const AddCar = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold mb-6 dark:text-white">Add New Car</h2>
+    <div className="bg-white dark:bg-gray-800 rounded-sm shadow-sm p-6 ">
+      <h2 className="text-xl font-semibold mb-6 dark:text-white sm:">Add New Car</h2>
       <form className="space-y-6">
         <div className="flex flex-wrap space-x-4">
           <div className="flex-1">
@@ -255,21 +257,23 @@ const AddCar = () => {
             multiple
             className={`w-full px-3 py-3 border ${errors.images ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white`}
           />
-          {errors.images && <p className="text-red-500 text-xs">{errors.images}</p>}
+          {errors.images && <p className="text-red-500 text-xs">{errors.images}</p> ||
+            errors.file && <ErrorMessage message={errors.file} />
+          }
         </div>
 
-     
+
       </form>
-      <div className='flex justify-end space-x-2'>
-      <button
-         onClick={handleSubmit}
-          className="w-[15%]  bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none"
+      <div className='flex justify-end space-x-2 my-2 text-base'>
+        <button
+          onClick={handleSubmit}
+          className="sm:w-[15%] w-[50%]   bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none"
         >
           Add Car
         </button>
         <button
-          className="w-[10%]  bg-slate-100   text-gray-900 py-2 rounded-md hover:bg-gray-200 focus:outline-none"
-          onClick={()=>navigate('/admin/inventory/all')}
+          className="sm:w-[10%] w-1/2 bg-slate-100   text-gray-900 py-2 rounded-md hover:bg-gray-200 focus:outline-none"
+          onClick={() => navigate('/admin/inventory/all')}
         >
           back
         </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Update } from '../../../api/update';
 const UpdateCar = ({ onUpdate }) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { existingCarData } = location.state || {}; // Access car data from route state
   const [carData, setCarData] = useState({
@@ -36,30 +36,28 @@ const UpdateCar = ({ onUpdate }) => {
         gear: existingCarData.gear,
         fuel_type: existingCarData.fuel_type,
         images: existingCarData.images || [],
-        id:existingCarData._id
+        id: existingCarData._id
       });
     }
-    else
-    {
+    else {
       alert("not working")
     }
   }, [existingCarData]);
 
-  const handleSubmit =async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate(carData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
-      const url=import.meta.env.VITE_BACK_END_API_URL;
-      const response=await Update(`${url}${carData.id}`,carData,carData)
+      const url = import.meta.env.VITE_BACK_END_API_URL;
+      const response = await Update(`${url}${carData.id}`, carData, carData)
 
-      if(response)
-        {
-          
-          setErrors({}); // Clear errors on successful submission
-          navigate("/admin/inventory/all")
-        }
+      if (response) {
+
+        setErrors({}); // Clear errors on successful submission
+        navigate("/admin/inventory/all")
+      }
     }
   };
 
@@ -114,13 +112,13 @@ const UpdateCar = ({ onUpdate }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold mb-6 dark:text-white">Update Car</h2>
+    <div className="bg-white dark:bg-gray-800 rounded-sm shadow-sm p-6">
+      <h2 className="text-base font-semibold mb-6 dark:text-white">Update Car</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex flex-wrap space-x-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Brand
+              Brand
             </label>
             <input
               type="text"
@@ -259,21 +257,22 @@ const UpdateCar = ({ onUpdate }) => {
             <option value="Not Available">Not Available</option>
           </select>
         </div>
-      <div className='flex justify-end space-x-2'>
-      <button
-          type="submit"
-          className="w-[15%]  bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none"
-        >
-          Update Car
-        </button>
+        <div className='flex justify-end space-x-2'>
+          <button
+            type="submit"
+            className="sm:w-[15%] w-[50%]   bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none"
 
-        <button
-          className="w-[10%] bg-gray-200 text-gray-900 dark:text-gray-900 py-2 rounded-md hover:bg-gray-300  focus:outline-none"
-          onClick={()=>navigate('/admin/inventory/all')}
-        >
-        back
-        </button>
-      </div>
+          >
+            Update Car
+          </button>
+
+          <button
+            className="sm:w-[10%] w-1/2 bg-slate-100   text-gray-900 py-2 rounded-md hover:bg-gray-200 focus:outline-none"
+            onClick={() => navigate('/admin/inventory/all')}
+          >
+            back
+          </button>
+        </div>
       </form>
     </div>
   );

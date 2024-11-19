@@ -11,11 +11,11 @@ import AdminLayout from './AdminPanel/AdminLayout';
 import Dashboard from './AdminPanel/pages/Dashboard';
 import AllCars from './AdminPanel/pages/inventory/AllCars';
 import AddCar from './AdminPanel/pages/inventory/AddCar';
-import Table from '../Template/Table';
 import UpdateCar from './AdminPanel/pages/inventory/UpdateCar';
 import Test from './AdminPanel/pages/test';
 import RowDetail from './AdminPanel/pages/inventory/RowDetail';
 import CarGallery from './AdminPanel/pages/inventory/CarGallery';
+import FileUpload from './components/FileUpload';
 const App = () => {
   return (
     
@@ -29,7 +29,6 @@ const App = () => {
           <Route path='CarListings' element={<CarListing />} />
           <Route path='contact' element={<ContactUs />} />
         </Route>
-        <Route path='/table' element={<Table />} />
         <Route path='/test' element={<Test />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard/>} />
@@ -40,6 +39,7 @@ const App = () => {
             <Route path='update' element={<UpdateCar/>}/>
             <Route path='row-detail' element={<RowDetail/>}/>
             <Route path='car-gallery' element={<CarGallery/>}/>
+            <Route path='file-upload' element={<FileUpload/>}/>
           </Route>
         </Route>
       </Routes>

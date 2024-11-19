@@ -6,19 +6,35 @@ import { faEdit, faTrash, faFileExport, faImages } from '@fortawesome/free-solid
 import * as XLSX from 'xlsx';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { getAll } from '../../../api/read';
+import { Delete } from '../../../api/delete';
+import DeleteModal from '../../../components/DeleteModal';
 
 
 const AllCars = () => {
   const [filterText, setFilterText] = useState('');
   const [cars, setCars] = useState([]);
-  
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [selectedId, setSelectedId] = useState();
   const { data } = getAll(import.meta.env.VITE_BACK_END_API_URL);
+  //delete modal state variable
+  const [isModalOpen, setIsModalOpen] = useState(false)
   useEffect(() => {
     // Only set cars when data is available and is an array
     if (data && Array.isArray(data)) {
       setCars(data);
     }
   }, [data]);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    console.log(windowWidth)
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [windowWidth])
 
   const [isDark, setIsDark] = useState(document.documentElement.classList.contains('dark'));
   const navigate = useNavigate();
@@ -33,7 +49,6 @@ const AllCars = () => {
     observer.observe(document.documentElement, { attributes: true });
     return () => observer.disconnect();
   }, []);
-
   // Define light and dark mode styles
   const darkModeStyles = {
     head: {
@@ -92,7 +107,6 @@ const AllCars = () => {
       },
     },
   };
-
   const lightModeStyles = {
     head: {
       style: {
@@ -150,13 +164,8 @@ const AllCars = () => {
       },
     },
   };
-
-
   // Combine styles based on current theme
   const customStyles = isDark ? darkModeStyles : lightModeStyles;
-
-
-
   const columns = [
     {
       name: 'Brand',
@@ -220,7 +229,7 @@ const AllCars = () => {
         <div className="flex">
           <button
             className="p-2 text-orange-600 hover:bg-orange-50 dark:text-orange-400 dark:hover:bg-orange-900/50 rounded-md transition-colors duration-200"
-            onClick={() => handleImageGallery(row.images)}
+            onClick={() => handleImageGallery(row.images,row._id)}
             aria-label="Gallery"
           >
             <FontAwesomeIcon icon={faImages} aria-label="gallery" />
@@ -244,7 +253,7 @@ const AllCars = () => {
           </button>
           <button
             className="p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/50 rounded-md transition-colors duration-200"
-            onClick={() => handleDelete(row)}
+            onClick={() => handleDelete(row._id)}
             aria-label="Delete"
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -253,13 +262,35 @@ const AllCars = () => {
       ),
     },
   ];
-
+  // handle modal open and close
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false)
   const handleEdit = (row) => {
     navigate("/admin/inventory/update", { state: { existingCarData: row } });
   };
-  const handleImageGallery = (row) => {
+  const handleDelete = async (row) => {
+    setSelectedId(row)
+    if (!isModalOpen) {
+      openModal();
+    }
+    else {
+      try {
+        const url = await import.meta.env.VITE_BACK_END_API_URL;
+        const response = await Delete(url,selectedId)
+        response ? setCars(response) : null
+        if(isModalOpen)
+          {
+            closeModal();
+          }
+      } catch (error) {
+        console.log("error occured while deleting" + error)
+      }
+    }
+
+  }
+  const handleImageGallery = (row,id) => {
     const carImagesArray = Array.isArray(row) ? row : [row];
-    navigate("/admin/inventory/car-gallery", { state: { carImages: carImagesArray } })
+    navigate("/admin/inventory/car-gallery", { state: { carImages: carImagesArray,id:id } })
   }
 
   const handleRowDetail = (row) => {
@@ -286,30 +317,31 @@ const AllCars = () => {
   };
 
   const subHeaderComponent = (
-    <div className="w-full mb-4 flex justify-between">
+    <div className="flex flex-col md:flex-row w-full mb-4 justify-between space-x-0 space-y-4 md:space-y-0 md:space-x-4">
       <input
         type="text"
         placeholder="Search..."
-        className="w-64 px-4 py-2 border rounded-sm bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none "
+        className="w-full md:w-64 px-4 py-2 border rounded-sm bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none"
         value={filterText}
         onChange={(e) => setFilterText(e.target.value)}
       />
-      <div className='flex space-x-4'>
+      <div className={`flex space-x-2 w-auto mb-10  h-10 text-center text-xs sm:text-base items-center justify-center`}>
         <Link
           to="/admin/inventory/add"
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors duration-200 font-medium"
+          className="bg-blue-600  hover:bg-blue-700 items-center text-white sm:py-2 sm:px-4 py-2 px-2 rounded-md transition-colors duration-200 font-medium w-[50%l md:w-auto"
         >
           Add New Car
         </Link>
         <button
           onClick={exportToExcel}
-          className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md shadow-sm transition-colors duration-200 font-medium"
+          className="flex py-2 justify-center items-center gap-2 sm:px-4 px-3 sm:py-2  bg-green-500 hover:bg-green-600 text-white rounded-md shadow-sm transition-colors duration-200 font-medium w-[50%] md:w-auto"
         >
           <FontAwesomeIcon icon={faFileExport} />
           Export to Excel
         </button>
       </div>
     </div>
+
   );
 
   return (
@@ -330,6 +362,11 @@ const AllCars = () => {
           subHeaderComponent={subHeaderComponent}
           customStyles={customStyles}
           noDataComponent={<div className='dark:bg-gray-800 text-gray-900  w-full text-center dark:text-white p-3'>There are no records to display</div>}
+        />
+        <DeleteModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          onConfirm={() => handleDelete()}
         />
       </div>
     </div>
