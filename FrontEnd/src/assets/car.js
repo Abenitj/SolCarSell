@@ -30,18 +30,4 @@ export default [
       price: "$30,000",
       image: img3,
     },
-    {
-      id: 1,
-      make: "Toyota",
-      model: "Camry",
-      price: "$20,000",
-      image: img1,
-    },
-    {
-      id: 2,
-      make: "Honda",
-      model: "Accord",
-      price: "$22,000",
-      image: img2,
-    },
   ];
