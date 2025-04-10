@@ -24,11 +24,10 @@ const Header = () => {
   };
 
   return (
-    <nav className="z-50 bg-gray-100 dark:bg-gray-800  shadow-xl text-gray-800  flex-row fixed top-0 left-0 w-full border-gray-200 transition-all duration-300">
+    <nav className="z-50 bg-gray-100 dark:bg-gray-800  shadow-sm text-gray-800  flex-row fixed top-0 left-0 w-full border-gray-200 transition-all duration-300">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2 transition-colors duration-500">
-        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src={logo} className="h-14 bg-primary rounded-full" alt="SolCarTrade" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">SolCarTrade</span>
+        <Link to="/" className="flex py-4 items-center space-x-3 rtl:space-x-reverse">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap"> car sell</span>
         </Link>
         <div className="md:hidden flex items-center space-x-4">
           <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">

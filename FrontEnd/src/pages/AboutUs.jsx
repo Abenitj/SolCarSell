@@ -113,9 +113,6 @@ const AboutUs = () => {
       </section>
 
       <div className="flex justify-center  dark:text-primary text-center w-full dark:bg-gray-800">
-        <p className="text-xl  p-5">
-          Join us on this journey, and experience a car trading platform where your needs are prioritized, and every detail matters.
-        </p>
       </div>
     </div>
   );

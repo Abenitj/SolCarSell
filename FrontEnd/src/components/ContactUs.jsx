@@ -97,7 +97,7 @@ export default function ContactUs() {
           </div>
 
           <div className="flex ml-auto">
-            <button type="submit" value="Send" className="bg-red-500 text-white text-lg py-2 px-6 flex gap-2 items-center shadow-[4px_6px_0px_0px_rgba(0,0,0,0.2)]">
+            <button type="submit" value="Send" className="bg-gray-800 text-white text-lg py-2 px-6 flex gap-2 items-center shadow-[4px_6px_0px_0px_rgba(0,0,0,0.2)]">
               Send Message
               <FaTelegramPlane color="#fff" />
             </button>
