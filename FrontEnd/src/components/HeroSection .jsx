@@ -11,7 +11,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // 5 seconds per slide
+    }, 5000); // 5 seconds per slide
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -70,9 +70,11 @@ const HeroSection = () => {
                       >
                         Browse Cars
                       </a>
-                      <button className="px-5 py-1 text-lg font-medium bg-transparent border-2 border-white hover:bg-white hover:text-gray-900">
+                    <a href="/contact">
+                    <button className="px-5 py-1 text-lg font-medium bg-transparent border-2 border-white hover:bg-white hover:text-gray-900">
                         Contact Us
                       </button>
+                    </a>
                     </div>
                   </div>
                 )}
